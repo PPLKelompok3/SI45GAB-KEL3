@@ -1,12 +1,26 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfileSetupController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+///TEMPORARY///
+Route::middleware(['auth'])->group(function () {
+    Route::get('/userprofile', fn () => view('profilebuilder/userprofile'));
+    Route::post('/userprofile/store', [ProfileSetupController::class, 'storeUserProfile'])->name('userprofile.store');
+
+});
+
+
+
+
+
+///TEMPORARY///
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

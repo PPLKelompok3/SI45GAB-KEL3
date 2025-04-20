@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class UserProfile extends Model
 {
@@ -12,4 +13,5 @@ class UserProfile extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
 }

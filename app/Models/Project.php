@@ -6,10 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
-    protected $fillable = ['user_id', 'title', 'description', 'link'];
-
+    protected $fillable = [
+        'title',
+        'description',
+        'link',
+        'technologies_used', // ✅ this line is critical
+        'user_id',
+    ];
+    
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+    
 }

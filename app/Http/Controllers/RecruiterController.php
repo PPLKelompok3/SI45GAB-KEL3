@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Company;
 use App\Models\User;
-use App\Models\JobApplication;
 
 class RecruiterController extends Controller
 {
@@ -77,6 +76,7 @@ class RecruiterController extends Controller
         'company_name' => $request->company_name,
     ]);
 }
+<<<<<<< HEAD
 public function applications(Request $request)
 {
     $user = Auth::user();
@@ -119,6 +119,8 @@ public function applications(Request $request)
     return view('recruiter.applicationindex', compact('applications', 'availableSkills', 'availableFields', 'availableLocations'));
 }
 
+=======
+>>>>>>> a511cf1 (PPL2025-35 Menambahkan fitur upload dan penyelesaian Profile Builder)
 
 
 }

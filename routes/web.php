@@ -73,6 +73,13 @@ Route::middleware(['auth', 'recruiter'])->group(function () {
     Route::patch('/recruiter/applications/{application}/update-status', [JobApplicationController::class, 'updateStatus'])->name('applications.updateStatus');
 });
 
+// Recruiter-only access
+Route::middleware(['auth', 'recruiter'])->group(function () {
+    Route::get('/recruiter/profile', [RecruiterController::class, 'showProfileForm'])->name('recruiter.profile');
+    Route::post('/recruiter/profile/store', [RecruiterController::class, 'storeProfile'])->name('recruiter.profile.store');
+    Route::get('/dashboard', [RecruiterController::class, 'dashboard'])->name('recruiter.dashboard');
+    Route::post('/recruiter/company/check', [RecruiterController::class, 'checkCompany'])->name('recruiter.company.check');
+    Route::post('/recruiter/profile/store', [RecruiterController::class, 'storeProfile'])->name('recruiter.profile.store');
 
 
 Route::middleware(['auth', 'recruiter'])->group(function () {

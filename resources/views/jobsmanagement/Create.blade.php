@@ -37,7 +37,7 @@
       </div>
       
       <div class="mb-3">
-        <label class="form-label">Jobs Category</label>
+        <label class="form-label">Job Category</label>
         <input id="job-category-input" name="category" class="form-control" placeholder="e.g. Backend, Design, DevOps">
       </div>
       

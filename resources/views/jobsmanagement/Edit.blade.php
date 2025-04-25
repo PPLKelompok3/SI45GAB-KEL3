@@ -66,7 +66,7 @@
   </div>
 </div>
 <div class="card mt-4">
-    <h5 class="card-header">Toggle Job Status</h5>
+    <h5 class="card-header">Toggle Jobs Status</h5>
     <div class="card-body">
       <div class="alert alert-info">
         <h6 class="alert-heading fw-bold mb-1">Current Status: <span class="badge bg-{{ $job->status === 'Active' ? 'success' : 'secondary' }}">{{ $job->status }}</span></h6>

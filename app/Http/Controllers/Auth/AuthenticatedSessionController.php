@@ -28,16 +28,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        $user = Auth::user();
-
-if ($user->role === 'recruiter') {
-    return redirect()->route('recruiter.profile');
-} elseif ($user->role === 'applicant') {
-    return redirect('/userprofile');
-} else {
-    return redirect('/');
-}
-
+        return redirect()->intended(route('dashboard', absolute: false));
     }
 
     /**

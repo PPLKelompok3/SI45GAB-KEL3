@@ -33,29 +33,18 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['required', 'in:applicant,recruiter']
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request['role'],
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        $user = Auth::user();
-
-if ($user->role === 'recruiter') {
-    return redirect()->route('recruiter.profile');
-} elseif ($user->role === 'applicant') {
-    return redirect('/userprofile');
-} else {
-    return redirect('/');
-}
-
+        return redirect(route('dashboard', absolute: false));
     }
 }

@@ -87,19 +87,21 @@
 
         <ul class="menu-inner py-1">
           <!-- Dashboard -->
-          <li class="menu-item">
-            <a href="index.html" class="menu-link">
+          <li class="menu-item {{ request()->routeIs('recruiter.dashboard') ? 'active' : '' }}">
+            <a href="{{ route('recruiter.dashboard') }}" class="menu-link">
               <i class="menu-icon tf-icons bx bx-home-circle"></i>
               <div data-i18n="Analytics">Dashboard</div>
             </a>
           </li>
+        
 
           <!-- Layouts -->
-          <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class="menu-icon tf-icons bx bx-layout"></i>
-              <div data-i18n="Layouts">Layouts</div>
+          <li class="menu-item {{ request()->routeIs('applications.index') ? 'active' : '' }}">
+            <a href="{{ route('applications.index') }}" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-home-circle"></i>
+              <div data-i18n="Analytics">Application</div>
             </a>
+          </li>
 
             <ul class="menu-sub">
               <li class="menu-item">
@@ -133,13 +135,13 @@
           <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Pages</span>
           </li>
-          <li class="menu-item active open">
+          <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
               <i class="menu-icon tf-icons bx bx-dock-top"></i>
               <div data-i18n="Account Settings">Account Settings</div>
             </a>
             <ul class="menu-sub">
-              <li class="menu-item active">
+              <li class="menu-item">
                 <a href="pages-account-settings-account.html" class="menu-link">
                   <div data-i18n="Account">Account</div>
                 </a>
@@ -438,16 +440,40 @@
 
             <ul class="navbar-nav flex-row align-items-center ms-auto">
               <!-- Place this tag where you want the button to render. -->
-              <li class="nav-item lh-1 me-3">
-                <a
-                  class="github-button"
-                  href="https://github.com/themeselection/sneat-html-admin-template-free"
-                  data-icon="octicon-star"
-                  data-size="large"
-                  data-show-count="true"
-                  aria-label="Star themeselection/sneat-html-admin-template-free on GitHub"
-                  >Star</a
-                >
+              <li class="nav-item dropdown notification-dropdown me-3">
+                <a class="nav-link dropdown-toggle hide-arrow" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="bx bx-bell fs-4"></i>
+                  <span class="badge bg-danger rounded-pill badge-notifications">3</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li class="dropdown-header">Notifications</li>
+                  <li>
+                    <a class="dropdown-item d-flex align-items-center" href="#">
+                      <div class="flex-shrink-0 me-3">
+                        <i class="bx bx-user-plus text-primary"></i>
+                      </div>
+                      <div class="flex-grow-1">
+                        <h6 class="mb-0">New applicant applied</h6>
+                        <small class="text-muted">Just now</small>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item d-flex align-items-center" href="#">
+                      <div class="flex-shrink-0 me-3">
+                        <i class="bx bx-briefcase text-success"></i>
+                      </div>
+                      <div class="flex-grow-1">
+                        <h6 class="mb-0">Job approved</h6>
+                        <small class="text-muted">2 hrs ago</small>
+                      </div>
+                    </a>
+                  </li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li>
+                    <a class="dropdown-item text-center" href="#">View All Notifications</a>
+                  </li>
+                </ul>
               </li>
 
               <!-- User -->
@@ -540,6 +566,7 @@
 
 <!-- Sneat Main JS -->
 <script src="{{ asset('assets/js/main.js') }}"></script>
+
 
 
   

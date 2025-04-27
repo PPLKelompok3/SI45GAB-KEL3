@@ -6,6 +6,7 @@ use App\Http\Controllers\RecruiterController;
 use App\Http\Controllers\JobPostController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ApplicantController;
+use App\Http\Controllers\JobApplicationController;
 
 
 use Illuminate\Support\Facades\Route;
@@ -55,26 +56,35 @@ Route::middleware(['auth', 'recruiter'])->group(function () {
     Route::get('/dashboard', [RecruiterController::class, 'dashboard'])->name('recruiter.dashboard');
     Route::post('/recruiter/company/check', [RecruiterController::class, 'checkCompany'])->name('recruiter.company.check');
     Route::post('/recruiter/profile/store', [RecruiterController::class, 'storeProfile'])->name('recruiter.profile.store');
+    Route::get('/recruiter/applications', [RecruiterController::class, 'applications'])->name('applications.index');
+    Route::get('/recruiter/applications/{application}', [JobApplicationController::class, 'show'])->name('applications.show');
+    Route::patch('/recruiter/applications/{application}/update-status', [JobApplicationController::class, 'updateStatus'])->name('applications.updateStatus');
 
 });
+    
+
+
 Route::middleware(['auth', 'recruiter'])->group(function () {
     // Route::get('/', [JobPostController::class, 'index'])->name('jobs.index');
     Route::get('/create', [JobPostController::class, 'create'])->name('jobs.create');
-    Route::post('/', [JobPostController::class, 'store'])->name('jobs.store');
+    Route::post('/store', [JobPostController::class, 'store'])->name('jobs.store');
     Route::get('/jobs/{job}/edit', [JobPostController::class, 'edit'])->name('jobs.edit');
     Route::put('/{job}', [JobPostController::class, 'update'])->name('jobs.update');
     Route::delete('/{job}', [JobPostController::class, 'destroy'])->name('jobs.destroy');
     Route::get('/createjob', fn () => view('jobsmanagement/Create'));
     Route::get('/jobs/edit/{job}', [JobPostController::class, 'edit'])->name('jobs.edit');
     Route::patch('/jobs/{job}/toggle-status', [JobPostController::class, 'toggleStatus'])->name('jobs.toggle-status');
+    Route::patch('/applications/{id}/update-status', [JobApplicationController::class, 'updateStatus'])->name('applications.update-status');
+
+    
 
 });
 ///TEMPORARY///
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 
 

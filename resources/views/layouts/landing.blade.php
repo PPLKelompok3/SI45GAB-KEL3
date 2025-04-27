@@ -72,7 +72,7 @@
                 @if(auth()->user()->role === 'applicant')
                   <a href="/applicantdashboard" class="btn btn-outline-primary">Dashboard</a>
                 @elseif(auth()->user()->role === 'recruiter')
-                  <a href="{{ route('dashboard') }}" class="btn btn-outline-primary">Dashboard</a>
+                  <a href="{{ route('recruiter.dashboard') }}" class="btn btn-outline-primary">Dashboard</a>
                 @endif
               
                 <form method="POST" action="{{ route('logout') }}" style="display: inline;">

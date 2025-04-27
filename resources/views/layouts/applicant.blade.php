@@ -12,6 +12,92 @@
   <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/boxicons.css') }}">
   @stack('head')
+  <style>
+  body {
+    font-family: "Roboto", sans-serif;
+    background: #EFF1F3;
+    min-height: 100vh;
+    position: relative;
+}
+
+.section-50 {
+    padding: 50px 0;
+}
+
+.m-b-50 {
+    margin-bottom: 50px;
+}
+
+.dark-link {
+    color: #333;
+}
+
+.heading-line {
+    position: relative;
+    padding-bottom: 5px;
+}
+
+.heading-line:after {
+    content: "";
+    height: 4px;
+    width: 75px;
+    background-color: #29B6F6;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.notification-ui_dd-content {
+    margin-bottom: 30px;
+}
+
+.notification-list {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 20px;
+    margin-bottom: 7px;
+    background: #fff;
+    -webkit-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+}
+
+.notification-list--unread {
+    border-left: 2px solid #29B6F6;
+}
+
+.notification-list .notification-list_content {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.notification-list .notification-list_content .notification-list_img img {
+    height: 48px;
+    width: 48px;
+    border-radius: 50px;
+    margin-right: 20px;
+}
+
+.notification-list .notification-list_content .notification-list_detail p {
+    margin-bottom: 5px;
+    line-height: 1.2;
+}
+
+.notification-list .notification-list_feature-img img {
+    height: 48px;
+    width: 48px;
+    border-radius: 5px;
+    margin-left: 20px;
+}
+.notification-list--unread {
+    background-color: #eef3fd;
+    border-left: 4px solid #4361ee;
+}
+</style>
 </head>
 <body>
   <div class="layout-wrapper layout-content-navbar">
@@ -88,323 +174,16 @@
 
         <ul class="menu-inner py-1">
           <!-- Dashboard -->
-          <li class="menu-item">
-            <a href="index.html" class="menu-link">
+          <li class="menu-item {{ request()->routeIs('applicantdashboard') ? 'active' : '' }}">
+            <a href="{{ route('applicantdashboard') }}" class="menu-link">
               <i class="menu-icon tf-icons bx bx-home-circle"></i>
-              <div data-i18n="Analytics">Dashboard</div>
+              <div data-i18n="Analytics">Application</div>
             </a>
           </li>
-
-          <!-- Layouts -->
-          <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class="menu-icon tf-icons bx bx-layout"></i>
-              <div data-i18n="Layouts">Layouts</div>
-            </a>
-
-            <ul class="menu-sub">
-              <li class="menu-item">
-                <a href="layouts-without-menu.html" class="menu-link">
-                  <div data-i18n="Without menu">Without menu</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="layouts-without-navbar.html" class="menu-link">
-                  <div data-i18n="Without navbar">Without navbar</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="layouts-container.html" class="menu-link">
-                  <div data-i18n="Container">Container</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="layouts-fluid.html" class="menu-link">
-                  <div data-i18n="Fluid">Fluid</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="layouts-blank.html" class="menu-link">
-                  <div data-i18n="Blank">Blank</div>
-                </a>
-              </li>
-            </ul>
-          </li>
-
-          <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">Pages</span>
-          </li>
-          <li class="menu-item active open">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class="menu-icon tf-icons bx bx-dock-top"></i>
-              <div data-i18n="Account Settings">Account Settings</div>
-            </a>
-            <ul class="menu-sub">
-              <li class="menu-item active">
-                <a href="pages-account-settings-account.html" class="menu-link">
-                  <div data-i18n="Account">Account</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="pages-account-settings-notifications.html" class="menu-link">
-                  <div data-i18n="Notifications">Notifications</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="pages-account-settings-connections.html" class="menu-link">
-                  <div data-i18n="Connections">Connections</div>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-              <div data-i18n="Authentications">Authentications</div>
-            </a>
-            <ul class="menu-sub">
-              <li class="menu-item">
-                <a href="auth-login-basic.html" class="menu-link" target="_blank">
-                  <div data-i18n="Basic">Login</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="auth-register-basic.html" class="menu-link" target="_blank">
-                  <div data-i18n="Basic">Register</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="auth-forgot-password-basic.html" class="menu-link" target="_blank">
-                  <div data-i18n="Basic">Forgot Password</div>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-              <div data-i18n="Misc">Misc</div>
-            </a>
-            <ul class="menu-sub">
-              <li class="menu-item">
-                <a href="pages-misc-error.html" class="menu-link">
-                  <div data-i18n="Error">Error</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="pages-misc-under-maintenance.html" class="menu-link">
-                  <div data-i18n="Under Maintenance">Under Maintenance</div>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <!-- Components -->
-          <li class="menu-header small text-uppercase"><span class="menu-header-text">Components</span></li>
-          <!-- Cards -->
-          <li class="menu-item">
-            <a href="cards-basic.html" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-collection"></i>
-              <div data-i18n="Basic">Cards</div>
-            </a>
-          </li>
-          <!-- User interface -->
-          <li class="menu-item">
-            <a href="javascript:void(0)" class="menu-link menu-toggle">
-              <i class="menu-icon tf-icons bx bx-box"></i>
-              <div data-i18n="User interface">User interface</div>
-            </a>
-            <ul class="menu-sub">
-              <li class="menu-item">
-                <a href="ui-accordion.html" class="menu-link">
-                  <div data-i18n="Accordion">Accordion</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="ui-alerts.html" class="menu-link">
-                  <div data-i18n="Alerts">Alerts</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="ui-badges.html" class="menu-link">
-                  <div data-i18n="Badges">Badges</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="ui-buttons.html" class="menu-link">
-                  <div data-i18n="Buttons">Buttons</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="ui-carousel.html" class="menu-link">
-                  <div data-i18n="Carousel">Carousel</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="ui-collapse.html" class="menu-link">
-                  <div data-i18n="Collapse">Collapse</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="ui-dropdowns.html" class="menu-link">
-                  <div data-i18n="Dropdowns">Dropdowns</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="ui-footer.html" class="menu-link">
-                  <div data-i18n="Footer">Footer</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="ui-list-groups.html" class="menu-link">
-                  <div data-i18n="List Groups">List groups</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="ui-modals.html" class="menu-link">
-                  <div data-i18n="Modals">Modals</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="ui-navbar.html" class="menu-link">
-                  <div data-i18n="Navbar">Navbar</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="ui-offcanvas.html" class="menu-link">
-                  <div data-i18n="Offcanvas">Offcanvas</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="ui-pagination-breadcrumbs.html" class="menu-link">
-                  <div data-i18n="Pagination &amp; Breadcrumbs">Pagination &amp; Breadcrumbs</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="ui-progress.html" class="menu-link">
-                  <div data-i18n="Progress">Progress</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="ui-spinners.html" class="menu-link">
-                  <div data-i18n="Spinners">Spinners</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="ui-tabs-pills.html" class="menu-link">
-                  <div data-i18n="Tabs &amp; Pills">Tabs &amp; Pills</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="ui-toasts.html" class="menu-link">
-                  <div data-i18n="Toasts">Toasts</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="ui-tooltips-popovers.html" class="menu-link">
-                  <div data-i18n="Tooltips & Popovers">Tooltips &amp; popovers</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="ui-typography.html" class="menu-link">
-                  <div data-i18n="Typography">Typography</div>
-                </a>
-              </li>
-            </ul>
-          </li>
-
-          <!-- Extended components -->
-          <li class="menu-item">
-            <a href="javascript:void(0)" class="menu-link menu-toggle">
-              <i class="menu-icon tf-icons bx bx-copy"></i>
-              <div data-i18n="Extended UI">Extended UI</div>
-            </a>
-            <ul class="menu-sub">
-              <li class="menu-item">
-                <a href="extended-ui-perfect-scrollbar.html" class="menu-link">
-                  <div data-i18n="Perfect Scrollbar">Perfect scrollbar</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="extended-ui-text-divider.html" class="menu-link">
-                  <div data-i18n="Text Divider">Text Divider</div>
-                </a>
-              </li>
-            </ul>
-          </li>
-
-          <li class="menu-item">
-            <a href="icons-boxicons.html" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-crown"></i>
-              <div data-i18n="Boxicons">Boxicons</div>
-            </a>
-          </li>
-
-          <!-- Forms & Tables -->
-          <li class="menu-header small text-uppercase"><span class="menu-header-text">Forms &amp; Tables</span></li>
-          <!-- Forms -->
-          <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class="menu-icon tf-icons bx bx-detail"></i>
-              <div data-i18n="Form Elements">Form Elements</div>
-            </a>
-            <ul class="menu-sub">
-              <li class="menu-item">
-                <a href="forms-basic-inputs.html" class="menu-link">
-                  <div data-i18n="Basic Inputs">Basic Inputs</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="forms-input-groups.html" class="menu-link">
-                  <div data-i18n="Input groups">Input groups</div>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class="menu-icon tf-icons bx bx-detail"></i>
-              <div data-i18n="Form Layouts">Form Layouts</div>
-            </a>
-            <ul class="menu-sub">
-              <li class="menu-item">
-                <a href="form-layouts-vertical.html" class="menu-link">
-                  <div data-i18n="Vertical Form">Vertical Form</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="form-layouts-horizontal.html" class="menu-link">
-                  <div data-i18n="Horizontal Form">Horizontal Form</div>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <!-- Tables -->
-          <li class="menu-item">
-            <a href="tables-basic.html" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-table"></i>
-              <div data-i18n="Tables">Tables</div>
-            </a>
-          </li>
-          <!-- Misc -->
-          <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
-          <li class="menu-item">
-            <a
-              href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
-              target="_blank"
-              class="menu-link"
-            >
-              <i class="menu-icon tf-icons bx bx-support"></i>
-              <div data-i18n="Support">Support</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a
-              href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/"
-              target="_blank"
-              class="menu-link"
-            >
-              <i class="menu-icon tf-icons bx bx-file"></i>
-              <div data-i18n="Documentation">Documentation</div>
+          <li class="menu-item {{ request()->routeIs('applicantnotification') ? 'active' : '' }}">
+            <a href="{{ route('applicantnotification') }}" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-home-circle"></i>
+              <div data-i18n="Analytics">Notification</div>
             </a>
           </li>
         </ul>
@@ -442,38 +221,56 @@
               <li class="nav-item dropdown notification-dropdown me-3">
                 <a class="nav-link dropdown-toggle hide-arrow" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <i class="bx bx-bell fs-4"></i>
-                  <span class="badge bg-danger rounded-pill badge-notifications">3</span>
+                  @php
+                  $unreadCount = Auth::user()->customNotifications()->where('is_read', false)->count();
+                @endphp
+                
+                @if ($unreadCount > 0)
+                  <span class="badge bg-danger rounded-pill badge-notifications">{{ $unreadCount }}</span>
+                @endif
                 </a>
+              
                 <ul class="dropdown-menu dropdown-menu-end">
                   <li class="dropdown-header">Notifications</li>
-                  <li>
-                    <a class="dropdown-item d-flex align-items-center" href="#">
-                      <div class="flex-shrink-0 me-3">
-                        <i class="bx bx-user-plus text-primary"></i>
-                      </div>
-                      <div class="flex-grow-1">
-                        <h6 class="mb-0">New applicant applied</h6>
-                        <small class="text-muted">Just now</small>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item d-flex align-items-center" href="#">
-                      <div class="flex-shrink-0 me-3">
-                        <i class="bx bx-briefcase text-success"></i>
-                      </div>
-                      <div class="flex-grow-1">
-                        <h6 class="mb-0">Job approved</h6>
-                        <small class="text-muted">2 hrs ago</small>
-                      </div>
-                    </a>
-                  </li>
+              
+                  @php
+                  $notifications = Auth::user()->customNotifications()->latest()->take(5)->get();
+                @endphp
+              
+                  @forelse ($notifications as $notification)
+                    <li>
+                      <a class="dropdown-item d-flex align-items-center" href="#">
+                        <div class="flex-shrink-0 me-3">
+                          @if ($notification->type === 'Application Status')
+                            <i class="bx bx-briefcase text-success"></i>
+                          @else
+                            <i class="bx bx-bell text-primary"></i>
+                          @endif
+                        </div>
+                        <div class="flex-grow-1">
+                          <h6 class="mb-0">{{ $notification->content }}</h6>
+                          <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+                        </div>
+                      </a>
+                    </li>
+                  @empty
+                    <li>
+                      <a class="dropdown-item text-center" href="#">No notifications yet</a>
+                    </li>
+                  @endforelse
+              
                   <li><hr class="dropdown-divider" /></li>
                   <li>
-                    <a class="dropdown-item text-center" href="#">View All Notifications</a>
+                    <form method="POST" action="{{ route('notifications.markAllRead') }}">
+                      @csrf
+                      <button type="submit" class="dropdown-item text-center" style="background: none; border: none;">
+                        View All Notifications
+                      </button>
+                  </form>                  
                   </li>
                 </ul>
               </li>
+              
               <!-- User -->
               <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">

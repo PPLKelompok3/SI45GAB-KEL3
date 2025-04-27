@@ -86,6 +86,11 @@ public function applications()
 {
     return $this->hasMany(\App\Models\JobApplication::class, 'user_id');
 }
+public function customNotifications()
+{
+    return $this->hasMany(Notification::class, 'user_id');
+}
+
 
 
 

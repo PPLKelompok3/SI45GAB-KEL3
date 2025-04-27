@@ -7,13 +7,15 @@ use App\Http\Controllers\JobPostController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\JobApplicationController;
-
-
+use App\Http\Controllers\NotificationController;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/laravel', function () {
     return view('welcome');
 });
+
+
 Route::get('/', [LandingController::class, 'index'])->name('home');
 Route::get('/ajax/jobs', [LandingController::class, 'jobListPartial'])->name('ajax.jobs');
 Route::get('/jobs/{id}/related', [JobPostController::class, 'relatedJobs'])->name('jobs.related');
@@ -47,6 +49,9 @@ Route::middleware(['auth', 'applicant'])->group(function () {
 
     Route::get('/summary', [ProfileSetupController::class, 'showSummary'])->name('summary');
     Route::get('/applicantdashboard', [ApplicantController::class, 'appliedJobs'])->name('applicantdashboard');
+    
+    Route::post('/notifications/mark-all-read', [NotificationController::class, 'markAllRead'])->name('notifications.markAllRead');
+    Route::get('/applicantnotification', [NotificationController::class, 'index'])->name('applicantnotification');
 });
 
 // Recruiter-only access

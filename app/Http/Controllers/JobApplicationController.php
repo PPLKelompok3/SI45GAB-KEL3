@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\JobApplication;
+use App\Models\Notification;
 
 
 use Illuminate\Http\Request;
@@ -24,6 +25,15 @@ class JobApplicationController extends Controller
     }
 
     $application->save();
+    // After $application->save();
+    Notification::create([
+        'user_id' => $application->user_id,
+        'type' => 'Application Status',
+        'content' => 'Your application for "' . $application->job->title . '" is now "' . $application->status . '".',
+        'is_read' => false,
+        'company_logo_url' => $application->job->company->logo_url ?? null
+    ]);
+
 
     return redirect()->back()->with('success', 'Application status updated successfully.');
 }

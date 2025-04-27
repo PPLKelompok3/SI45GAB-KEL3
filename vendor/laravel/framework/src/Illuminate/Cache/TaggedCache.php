@@ -109,11 +109,7 @@ class TaggedCache extends Repository
      */
     protected function event($event)
     {
-        if (method_exists($event, 'setTags')) {
-            $event->setTags($this->tags->getNames());
-        }
-
-        parent::event($event);
+        parent::event($event->setTags($this->tags->getNames()));
     }
 
     /**

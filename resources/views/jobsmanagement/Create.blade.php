@@ -41,6 +41,21 @@
         <input id="job-category-input" name="category" class="form-control" placeholder="e.g. Backend, Design, DevOps">
       </div>
       
+      <div class="mb-3">
+        <label class="form-label">Experience Required</label>
+        <input type="text" name="experience_level" class="form-control" list="experience-options" placeholder="e.g. Fresh Graduate, 2+ years, Entry Level">
+        <datalist id="experience-options">
+          <option value="Fresh Graduate">
+          <option value="1+ years">
+          <option value="2+ years">
+          <option value="3+ years">
+          <option value="5+ years">
+          <option value="Entry Level">
+          <option value="Mid Level">
+          <option value="Senior Level">
+        </datalist>
+      </div>
+      
 
       <div class="row">
         <div class="mb-3 col-md-6">

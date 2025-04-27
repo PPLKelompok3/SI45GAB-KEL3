@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Company;
 use App\Models\User;
+use App\Models\JobApplication;
 
 class RecruiterController extends Controller
 {
@@ -53,7 +54,7 @@ class RecruiterController extends Controller
 
     public function dashboard()
     {
-        return view('recruiterbuilder.dashboard');
+        return view('recruiter.dashboard');
     }
     public function checkCompany(Request $request)
 {
@@ -75,6 +76,26 @@ class RecruiterController extends Controller
     return view('recruiterbuilder.company-details', [
         'company_name' => $request->company_name,
     ]);
+}
+public function applications()
+{
+    $user = Auth::user();
+
+    // Get recruiter company ID
+    $companyId = $user->company->id ?? null;
+    if (!$companyId) {
+        abort(403, 'You do not have a company profile.');
+    }
+
+    // Get applications where the job's company matches recruiter
+    $applications = JobApplication::with(['user', 'job.company'])
+        ->whereHas('job', function ($query) use ($companyId) {
+            $query->where('company_id', $companyId);
+        })
+        ->latest()
+        ->get();
+
+    return view('recruiter.applicationindex', compact('applications'));
 }
 
 

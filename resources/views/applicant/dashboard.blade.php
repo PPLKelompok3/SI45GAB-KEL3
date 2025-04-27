@@ -1,5 +1,4 @@
-@extends('layouts.applicant') {{-- or your main layout --}}
-
+@extends('layouts.applicant') 
 @section('title', 'My Applications')
 
 @section('content')

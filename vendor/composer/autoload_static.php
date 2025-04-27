@@ -207,9 +207,15 @@ class ComposerStaticInitd8f67b824a1bf31c8999ead558d9b485
         ),
         'phpDocumentor\\Reflection\\' => 
         array (
+
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+
+            0 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
+
         ),
         'Whoops\\' => 
         array (
@@ -614,18 +620,25 @@ class ComposerStaticInitd8f67b824a1bf31c8999ead558d9b485
         'App\\Http\\Middleware\\EnsureUserIsRecruiter' => __DIR__ . '/../..' . '/app/Http/Middleware/EnsureUserIsRecruiter.php',
         'App\\Http\\Requests\\Auth\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Auth/LoginRequest.php',
         'App\\Http\\Requests\\ProfileUpdateRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ProfileUpdateRequest.php',
+
         'App\\Models\\Achievement' => __DIR__ . '/../..' . '/app/Models/Achievement.php',
         'App\\Models\\ApplicationStatusLog' => __DIR__ . '/../..' . '/app/Models/ApplicationStatusLog.php',
         'App\\Models\\Company' => __DIR__ . '/../..' . '/app/Models/Company.php',
         'App\\Models\\Education' => __DIR__ . '/../..' . '/app/Models/Education.php',
         'App\\Models\\Experience' => __DIR__ . '/../..' . '/app/Models/Experience.php',
+
+        'App\\Models\\ApplicationStatusLog' => __DIR__ . '/../..' . '/app/Models/ApplicationStatusLog.php',
+        'App\\Models\\Company' => __DIR__ . '/../..' . '/app/Models/Company.php',
+
         'App\\Models\\JobApplication' => __DIR__ . '/../..' . '/app/Models/JobApplication.php',
         'App\\Models\\JobPost' => __DIR__ . '/../..' . '/app/Models/JobPost.php',
         'App\\Models\\JobSkill' => __DIR__ . '/../..' . '/app/Models/JobSkill.php',
         'App\\Models\\Notification' => __DIR__ . '/../..' . '/app/Models/Notification.php',
+
         'App\\Models\\Organization' => __DIR__ . '/../..' . '/app/Models/Organization.php',
         'App\\Models\\Project' => __DIR__ . '/../..' . '/app/Models/Project.php',
         'App\\Models\\Skill' => __DIR__ . '/../..' . '/app/Models/Skill.php',
+
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\UserProfile' => __DIR__ . '/../..' . '/app/Models/UserProfile.php',
         'App\\Models\\UserSkill' => __DIR__ . '/../..' . '/app/Models/UserSkill.php',

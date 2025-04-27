@@ -27,18 +27,25 @@ return array(
     'App\\Http\\Middleware\\EnsureUserIsRecruiter' => $baseDir . '/app/Http/Middleware/EnsureUserIsRecruiter.php',
     'App\\Http\\Requests\\Auth\\LoginRequest' => $baseDir . '/app/Http/Requests/Auth/LoginRequest.php',
     'App\\Http\\Requests\\ProfileUpdateRequest' => $baseDir . '/app/Http/Requests/ProfileUpdateRequest.php',
+
     'App\\Models\\Achievement' => $baseDir . '/app/Models/Achievement.php',
     'App\\Models\\ApplicationStatusLog' => $baseDir . '/app/Models/ApplicationStatusLog.php',
     'App\\Models\\Company' => $baseDir . '/app/Models/Company.php',
     'App\\Models\\Education' => $baseDir . '/app/Models/Education.php',
     'App\\Models\\Experience' => $baseDir . '/app/Models/Experience.php',
+
+    'App\\Models\\ApplicationStatusLog' => $baseDir . '/app/Models/ApplicationStatusLog.php',
+    'App\\Models\\Company' => $baseDir . '/app/Models/Company.php',
+
     'App\\Models\\JobApplication' => $baseDir . '/app/Models/JobApplication.php',
     'App\\Models\\JobPost' => $baseDir . '/app/Models/JobPost.php',
     'App\\Models\\JobSkill' => $baseDir . '/app/Models/JobSkill.php',
     'App\\Models\\Notification' => $baseDir . '/app/Models/Notification.php',
+
     'App\\Models\\Organization' => $baseDir . '/app/Models/Organization.php',
     'App\\Models\\Project' => $baseDir . '/app/Models/Project.php',
     'App\\Models\\Skill' => $baseDir . '/app/Models/Skill.php',
+
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Models\\UserProfile' => $baseDir . '/app/Models/UserProfile.php',
     'App\\Models\\UserSkill' => $baseDir . '/app/Models/UserSkill.php',

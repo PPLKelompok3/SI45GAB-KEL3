@@ -22,23 +22,32 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse
-    {
-        $request->authenticate();
+    public function store(Request $request): RedirectResponse
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
+    ]);
 
-        $request->session()->regenerate();
+    if (!Auth::attempt($request->only('email', 'password'), $request->filled('remember'))) {
+        return back()->withErrors([
+            'email' => 'Invalid credentials.',
+        ]);
+    }
 
-        $user = Auth::user();
+    $user = Auth::user();
 
-if ($user->role === 'recruiter') {
-    return redirect()->route('recruiter.profile');
-} elseif ($user->role === 'applicant') {
-    return redirect('/userprofile');
-} else {
-    return redirect('/');
+    // 🛠️ Custom logic for recruiter if needed
+    if ($user->role === 'recruiter') {
+        if (!$user->company) {
+            return redirect()->route('recruiter.profile'); // Still force recruiter to complete profile
+        }
+    }
+
+    // ✅ Force all to homepage after login
+    return redirect()->intended('/');
 }
 
-    }
 
     /**
      * Destroy an authenticated session.

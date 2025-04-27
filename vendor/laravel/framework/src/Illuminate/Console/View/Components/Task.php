@@ -2,7 +2,7 @@
 
 namespace Illuminate\Console\View\Components;
 
-use Illuminate\Console\View\TaskResult;
+use Illuminate\Database\Migrations\MigrationResult;
 use Illuminate\Support\InteractsWithTime;
 use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
@@ -35,10 +35,10 @@ class Task extends Component
 
         $startTime = microtime(true);
 
-        $result = TaskResult::Failure->value;
+        $result = MigrationResult::Failure;
 
         try {
-            $result = ($task ?: fn () => TaskResult::Success->value)();
+            $result = ($task ?: fn () => MigrationResult::Success)();
         } catch (Throwable $e) {
             throw $e;
         } finally {
@@ -55,8 +55,8 @@ class Task extends Component
 
             $this->output->writeln(
                 match ($result) {
-                    TaskResult::Failure->value => ' <fg=red;options=bold>FAIL</>',
-                    TaskResult::Skipped->value => ' <fg=yellow;options=bold>SKIPPED</>',
+                    MigrationResult::Failure => ' <fg=red;options=bold>FAIL</>',
+                    MigrationResult::Skipped => ' <fg=yellow;options=bold>SKIPPED</>',
                     default => ' <fg=green;options=bold>DONE</>'
                 },
                 $verbosity,

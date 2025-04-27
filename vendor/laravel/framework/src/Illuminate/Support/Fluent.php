@@ -40,17 +40,6 @@ class Fluent implements Arrayable, ArrayAccess, Jsonable, JsonSerializable
     }
 
     /**
-     * Create a new fluent instance.
-     *
-     * @param  iterable<TKey, TValue>  $attributes
-     * @return static
-     */
-    public static function make($attributes = [])
-    {
-        return new static($attributes);
-    }
-
-    /**
      * Get an attribute from the fluent instance using "dot" notation.
      *
      * @template TGetDefault

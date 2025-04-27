@@ -21,4 +21,14 @@ class Company extends Model
     {
         return $this->hasMany(JobPost::class);
     }
+    public function jobs()
+    {
+        return $this->hasMany(JobPost::class);
+    }
+    public function recruiter()
+{
+    return $this->hasOne(User::class);
+}
+
+
 }

@@ -14,9 +14,15 @@ class JobPostController extends Controller
     /**
      * Display a listing of the resource.
      */
-  public function create()
+    public function index()
 {
-    return view('jobsmanagement.create');
+    $jobs = JobPost::where('company_id', Auth::user()->company_id)->latest()->get();
+    return view('recruiter.jobs.index', compact('jobs'));
+}
+
+public function create()
+{
+    return view('recruiter.jobs.create');
 }
 
 
@@ -63,7 +69,7 @@ public function store(Request $request)
         \App\Models\Skill::firstOrCreate(['name' => $skillName]);
     }
 
-    return redirect()->route('dashboard')->with('success', 'Job posted!');
+    return redirect()->route('jobsmanagement.Create')->with('success', 'Job posted!');
 }
 
 
@@ -112,14 +118,14 @@ public function update(Request $request, JobPost $job)
     // ✅ Update the job
     $job->update($data);
 
-    return redirect()->route('dashboard')->with('success', 'Job updated successfully.');
+    return redirect()->route('jobsmanagement.Edit')->with('success', 'Job updated successfully.');
 }
 
 
 public function destroy(JobPost $job)
 {
     $job->delete();
-    return redirect()->route('dashboard')->with('success', 'Job deleted!');
+    return back()->with('success', 'Job deleted.');
 }
 public function toggleStatus(JobPost $job)
 {
@@ -128,4 +134,69 @@ public function toggleStatus(JobPost $job)
 
     return back()->with('success', 'Job status updated to ' . $job->status);
 }
+public function show($id, $slug = null)
+{
+    $job = JobPost::with('company')->findOrFail($id);
+
+    $isApplied = false;
+
+    if (Auth::check() && Auth::user()->role === 'applicant') {
+        /** @var \App\Models\User $user */
+        $user = Auth::user(); // ➔ Help the editor know this is a User
+        $isApplied = $user->applications()
+            ->where('job_id', $job->id)
+            ->exists();
+    }
+
+    return view('jobsmanagement.Details', compact('job', 'isApplied'));
+}
+
+
+public function relatedJobs(Request $request, $id)
+{
+    $currentJob = JobPost::findOrFail($id);
+
+    $relatedJobs = JobPost::with('company')
+        ->where('status', 'Active')
+        ->where('id', '!=', $currentJob->id)
+        ->where('category', $currentJob->category)
+        ->latest()
+        ->paginate(4);
+
+    // TEMPORARY: allow normal browser view for testing
+    return view('partials.related-jobs', compact('relatedJobs'));
+
+    // FINAL VERSION:
+    // if ($request->ajax()) {
+    //     return view('partials.related-jobs', compact('relatedJobs'));
+    // }
+    //
+    // abort(404);
+}
+public function apply(Request $request, $id)
+{
+    // Prevent double-application
+    $existing = JobApplication::where('job_id', $id)
+                ->where('user_id', Auth::id())
+                ->first();
+
+    if ($existing) {
+        return back()->with('error', 'You have already applied to this job.');
+    }
+
+    JobApplication::create([
+        'job_id' => $id,
+        'user_id' => Auth::id(),
+        'status' => 'Pending', // default status
+        'cover_letter' => $request->input('cover_letter', null),
+    ]);
+
+    return back()->with('success', 'Your application has been submitted.');
+}
+
+
+
+
+
+
 }

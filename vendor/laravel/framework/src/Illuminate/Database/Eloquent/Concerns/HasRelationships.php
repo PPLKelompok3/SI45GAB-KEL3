@@ -162,7 +162,7 @@ trait HasRelationships
      * Propagate the relationship autoloader callback to the given related models.
      *
      * @param  string  $key
-     * @param  mixed  $models
+     * @param  mixed  $values
      * @param  mixed  $context
      * @return void
      */
@@ -1113,18 +1113,6 @@ trait HasRelationships
     public function setRelations(array $relations)
     {
         $this->relations = $relations;
-
-        return $this;
-    }
-
-    /**
-     * Enable relationship autoloading for this model.
-     *
-     * @return $this
-     */
-    public function withRelationshipAutoloading()
-    {
-        $this->newCollection([$this])->withRelationshipAutoloading();
 
         return $this;
     }

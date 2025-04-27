@@ -113,7 +113,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
     /**
      * Eager load all items into a new lazy collection backed by an array.
      *
-     * @return static<TKey, TValue>
+     * @return static
      */
     public function eager()
     {
@@ -123,7 +123,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
     /**
      * Cache values as they're enumerated.
      *
-     * @return static<TKey, TValue>
+     * @return static
      */
     public function remember()
     {
@@ -334,7 +334,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
      * Get the items that are not present in the given items.
      *
      * @param  \Illuminate\Contracts\Support\Arrayable<array-key, TValue>|iterable<array-key, TValue>  $items
-     * @return static<TKey, TValue>
+     * @return static
      */
     public function diff($items)
     {
@@ -1091,7 +1091,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
     /**
      * Reverse items order.
      *
-     * @return static<TKey, TValue>
+     * @return static
      */
     public function reverse()
     {
@@ -1186,7 +1186,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
     /**
      * Shuffle the items in the collection.
      *
-     * @return static<TKey, TValue>
+     * @return static
      */
     public function shuffle()
     {
@@ -1549,7 +1549,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
      * Take the first or last {$limit} items.
      *
      * @param  int  $limit
-     * @return static<TKey, TValue>
+     * @return static
      */
     public function take($limit)
     {
@@ -1592,7 +1592,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
      * Take items in the collection until the given condition is met.
      *
      * @param  TValue|callable(TValue,TKey): bool  $value
-     * @return static<TKey, TValue>
+     * @return static
      */
     public function takeUntil($value)
     {
@@ -1614,7 +1614,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
      * Take items in the collection until a given point in time.
      *
      * @param  \DateTimeInterface  $timeout
-     * @return static<TKey, TValue>
+     * @return static
      */
     public function takeUntilTimeout(DateTimeInterface $timeout)
     {
@@ -1639,7 +1639,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
      * Take items in the collection while the given condition is met.
      *
      * @param  TValue|callable(TValue,TKey): bool  $value
-     * @return static<TKey, TValue>
+     * @return static
      */
     public function takeWhile($value)
     {
@@ -1653,7 +1653,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
      * Pass each item in the collection to the given callback, lazily.
      *
      * @param  callable(TValue, TKey): mixed  $callback
-     * @return static<TKey, TValue>
+     * @return static
      */
     public function tapEach(callable $callback)
     {
@@ -1713,7 +1713,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
      *
      * @param  (callable(TValue, TKey): mixed)|string|null  $key
      * @param  bool  $strict
-     * @return static<TKey, TValue>
+     * @return static
      */
     public function unique($key = null, $strict = false)
     {

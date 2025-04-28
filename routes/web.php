@@ -8,6 +8,7 @@ use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\RecruiterDashboardController;
 use App\Models\Notification;
 use Illuminate\Support\Facades\Route;
 
@@ -58,7 +59,10 @@ Route::middleware(['auth', 'applicant'])->group(function () {
 Route::middleware(['auth', 'recruiter'])->group(function () {
     Route::get('/recruiter/profile', [RecruiterController::class, 'showProfileForm'])->name('recruiter.profile');
     Route::post('/recruiter/profile/store', [RecruiterController::class, 'storeProfile'])->name('recruiter.profile.store');
-    Route::get('/dashboard', [RecruiterController::class, 'dashboard'])->name('recruiter.dashboard');
+
+    // Main Dashboard Page Route
+    Route::get('/dashboard', [RecruiterDashboardController::class, 'recruiterDashboard'])->name('recruiter.dashboard');
+    
     Route::post('/recruiter/company/check', [RecruiterController::class, 'checkCompany'])->name('recruiter.company.check');
     Route::post('/recruiter/profile/store', [RecruiterController::class, 'storeProfile'])->name('recruiter.profile.store');
     Route::get('/recruiter/applications', [RecruiterController::class, 'applications'])->name('applications.index');

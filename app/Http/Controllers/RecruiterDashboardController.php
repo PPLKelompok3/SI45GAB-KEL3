@@ -26,10 +26,14 @@ class RecruiterDashboardController extends Controller
             $query->where('company_id', $companyId);
         })->where('status', 'Rejected')->count();
 
+        $totalJobs = JobPost::where('company_id', $companyId)->count();
+
         return view('recruiter.dashboard', compact(
             'totalApplicants',
             'acceptedApplicants',
-            'rejectedApplicants'
+            'rejectedApplicants',
+            'totalJobs'
+
         ));
     }
 }

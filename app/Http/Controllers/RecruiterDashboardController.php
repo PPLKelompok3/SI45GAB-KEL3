@@ -28,12 +28,31 @@ class RecruiterDashboardController extends Controller
 
         $totalJobs = JobPost::where('company_id', $companyId)->count();
 
+        // Job Posts for Dropdown
+        $jobPosts = JobPost::where('company_id', $companyId)
+            ->where('status', 'Active')
+            ->pluck('title', 'id'); // ['id' => 'title']
+
         return view('recruiter.dashboard', compact(
             'totalApplicants',
             'acceptedApplicants',
             'rejectedApplicants',
-            'totalJobs'
-
+            'totalJobs',
+            'jobPosts'
         ));
+    }
+    
+    public function getJobApplicantsGraph(Request $request)
+    {
+        $jobId = $request->job_id;
+
+        // Group applicants by month
+        $monthlyApplicants = JobApplication::where('job_id', $jobId)
+            ->selectRaw('MONTH(created_at) as month, COUNT(*) as total')
+            ->groupBy('month')
+            ->orderBy('month')
+            ->pluck('total', 'month'); // [month => total]
+
+        return response()->json($monthlyApplicants);
     }
 }

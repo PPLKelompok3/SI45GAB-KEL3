@@ -41,7 +41,6 @@ class RecruiterDashboardController extends Controller
             'jobPosts'
         ));
     }
-    
     public function getJobApplicantsGraph(Request $request)
     {
         $jobId = $request->job_id;

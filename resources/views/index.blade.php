@@ -14,27 +14,54 @@
               <h1 class="text-white font-weight-bold">Discover Your <span style="color: #ffc901;">Workora </span>Match!</h1>
               <p>Find the perfect job that matches your skills and passion. Choose the position you desire and get the best opportunities!</p>
             </div>
-            <form method="post" class="search-jobs-form">
+            <form method="GET" action="{{ route('home') }}" class="search-jobs-form">
               <div class="row mb-5">
                 <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-4 mb-lg-0">
-                  <input class="form-control form-control-lg" type="text" id="search-title" name="title" style="height: 52px;" placeholder="Job title, Company..." />
+                  <input class="form-control form-control-lg" 
+                  type="text" 
+                  id="search-title" 
+                  name="title" 
+                  style="height: 52px;" 
+                  placeholder="Job title, Company..." 
+                  value="{{ request('title') }}" />
+           
                 </div>
                 
                 <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-4 mb-lg-0">
-                  <input class="form-control form-control-lg" type="text" id="search-location" name="location" placeholder="Select Region" />
+                  <input class="form-control form-control-lg" 
+       type="text" 
+       id="search-location" 
+       name="location" 
+       placeholder="Select Region" 
+       value="{{ request('location') }}" />
+
                 </div>
                 
                 <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-4 mb-lg-0">
-                  <input class="form-control form-control-lg" type="text" id="search-type" name="employment_type" placeholder="Select Job Type" />
+                  <input class="form-control form-control-lg" 
+                  type="text" 
+                  id="search-type" 
+                  name="employment_type" 
+                  placeholder="Select Job Type" 
+                  value="{{ request('employment_type') }}" />
+           
                 </div>
                 
                 <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-4 mb-lg-0">
                   <button type="submit" class="btn btn-lg btn-block text-dark btn-search"
-  style="background-color: #ffc901; border: none;">
-  <span class="icon-search icon mr-2"></span>Search Job
-</button>
+                          style="background-color: #ffc901; border: none;">
+                    <span class="icon-search icon mr-2"></span>Search Job
+                  </button>
+                  
+                  <!-- Reset Button (below Search Job) -->
+                  <a href="{{ route('home') }}" 
+   class="btn btn-lg btn-block mt-2 d-flex justify-content-center align-items-center" 
+   style="background-color: #ffc901; border: none; color: #333; height: 52px;">
+   Reset
+</a>
 
                 </div>
+                
               </div>
               @if(count($recommendedSkills))
   <div class="row mt-4">
@@ -43,10 +70,14 @@
       <ul class="keywords list-unstyled m-0 p-0">
         @foreach ($recommendedSkills as $skill)
           <li style="display: inline-block; margin-right: 10px; margin-bottom: 10px;">
-            <a href="#" class="text-dark"
-               style="display: inline-block; padding: 10px 18px; font-size: 1.1rem; background-color: #ffc901; border-radius: 20px; text-decoration: none;">
-              {{ ucfirst($skill) }}
-            </a>
+            <a href="#" 
+   class="text-dark recommended-skill {{ request('title') == $skill ? 'selected-skill' : '' }}"
+   data-skill="{{ $skill }}"
+   style="display: inline-block; padding: 10px 18px; font-size: 1.1rem; background-color: #ffc901; border-radius: 20px; text-decoration: none;">
+   {{ ucfirst($skill) }}
+</a>
+
+
           </li>
         @endforeach
       </ul>
@@ -294,6 +325,27 @@
     });
   });
 </script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const skillButtons = document.querySelectorAll('.recommended-skill');
+    const titleInput = document.getElementById('search-title');
+
+    skillButtons.forEach(button => {
+      button.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const skill = this.dataset.skill;
+
+        // Set the skill to the search title input
+        titleInput.value = skill;
+
+        // Submit the form
+        this.closest('form').submit();
+      });
+    });
+  });
+</script>
+
 @endpush   
   </body>
 </html>

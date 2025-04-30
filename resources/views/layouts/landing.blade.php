@@ -16,6 +16,14 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.min.css" />
 
+    <style>
+      .selected-skill {
+        background-color: #ffa500 !important; /* darker orange */
+        color: white !important;
+      }
+    </style>
+    
+
     @stack('head')
   </head>
 

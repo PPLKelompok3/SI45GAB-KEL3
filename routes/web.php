@@ -10,6 +10,8 @@ use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RecruiterDashboardController;
 use App\Models\Notification;
+use App\Http\Controllers\LandingController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/laravel', function () {

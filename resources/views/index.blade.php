@@ -48,15 +48,34 @@
             <form method="post" class="search-jobs-form">
               <div class="row mb-5">
                 <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-4 mb-lg-0">
-                  <input class="form-control form-control-lg" type="text" id="search-title" name="title" style="height: 52px;" placeholder="Job title, Company..." />
+                  <input class="form-control form-control-lg" 
+                  type="text" 
+                  id="search-title" 
+                  name="title" 
+                  style="height: 52px;" 
+                  placeholder="Job title, Company..." 
+                  value="{{ request('title') }}" />
+           
                 </div>
                 
                 <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-4 mb-lg-0">
-                  <input class="form-control form-control-lg" type="text" id="search-location" name="location" placeholder="Select Region" />
+                  <input class="form-control form-control-lg" 
+       type="text" 
+       id="search-location" 
+       name="location" 
+       placeholder="Select Region" 
+       value="{{ request('location') }}" />
+
                 </div>
                 
                 <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-4 mb-lg-0">
-                  <input class="form-control form-control-lg" type="text" id="search-type" name="employment_type" placeholder="Select Job Type" />
+                  <input class="form-control form-control-lg" 
+                  type="text" 
+                  id="search-type" 
+                  name="employment_type" 
+                  placeholder="Select Job Type" 
+                  value="{{ request('employment_type') }}" />
+           
                 </div>
                 
                 <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-4 mb-lg-0">
@@ -104,17 +123,32 @@
 </button>
 
                 </div>
+                
               </div>
-              <div class="row">
-                <div class="col-md-12 popular-keywords">
-                  <h3>Trending Keywords:</h3>
-                  <ul class="keywords list-unstyled m-0 p-0">
-                    <li><a href="#" class="">UI Designer</a></li>
-                    <li><a href="#" class="">Python</a></li>
-                    <li><a href="#" class="">Developer</a></li>
-                  </ul>
-                </div>
-              </div>
+              @if(count($recommendedSkills))
+  <div class="row mt-4">
+    <div class="col-md-12 popular-keywords">
+      <h3>Recommended for You:</h3>
+      <ul class="keywords list-unstyled m-0 p-0">
+        @foreach ($recommendedSkills as $skill)
+          <li style="display: inline-block; margin-right: 10px; margin-bottom: 10px;">
+            <a href="#" 
+   class="text-dark recommended-skill {{ request('title') == $skill ? 'selected-skill' : '' }}"
+   data-skill="{{ $skill }}"
+   style="display: inline-block; padding: 10px 18px; font-size: 1.1rem; background-color: #ffc901; border-radius: 20px; text-decoration: none;">
+   {{ ucfirst($skill) }}
+</a>
+
+
+          </li>
+        @endforeach
+      </ul>
+    </div>
+  </div>
+@endif
+
+
+
             </form>
           </div>
         </div>
@@ -362,7 +396,18 @@
         </div>
 
       </div>
-    </section>
+    </div>
+    <div id="job-loader" style="display: none; text-align: center; margin-bottom: 1rem;">
+      <div class="spinner-border text-warning" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>    
+    <div id="job-list-container">
+      @include('partials.job-list', ['jobs' => $jobs])
+    </div>
+  </div>
+</section>
+
 
     <section class="py-5 bg-image overlay-primary fixed overlay" style="background-image: url('{{ asset('assets/images/hero_1.jpg') }}');">
       <div class="container">

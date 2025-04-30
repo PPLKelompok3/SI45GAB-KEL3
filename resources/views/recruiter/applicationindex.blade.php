@@ -1,10 +1,72 @@
 @extends('layouts.recruiter') 
 @section('title', 'Applications')
-
 @section('content')
+<div class="d-flex justify-content-start mb-3 gap-2">
+  <form method="GET" action="{{ route('applications.index') }}" class="d-flex flex-wrap gap-2 mb-3 align-items-center">
+    <!-- Skill Dropdown -->
+    <div class="btn-group">
+      <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+        {{ request('skill') ?? 'Filter by Skill' }}
+      </button>
+      <ul class="dropdown-menu">
+        @foreach ($availableSkills as $skill)
+          <li>
+            <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('skill-input').value = '{{ $skill }}'; this.closest('form').submit();">
+              {{ $skill }}
+            </a>
+          </li>
+        @endforeach
+      </ul>
+    </div>
+    <input type="hidden" name="skill" id="skill-input" value="{{ request('skill') }}">
+  
+    <!-- Field of Study Dropdown -->
+    <div class="btn-group">
+      <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+        {{ request('field') ?? 'Filter by Field of Study' }}
+      </button>
+      <ul class="dropdown-menu">
+        @foreach ($availableFields as $field)
+          <li>
+            <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('field-input').value = '{{ $field }}'; this.closest('form').submit();">
+              {{ $field }}
+            </a>
+          </li>
+        @endforeach
+      </ul>
+    </div>
+    <input type="hidden" name="field" id="field-input" value="{{ request('field') }}">
+  
+    <!-- Location Dropdown -->
+    <div class="btn-group">
+      <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+        {{ request('location') ?? 'Filter by Location' }}
+      </button>
+      <ul class="dropdown-menu">
+        @foreach ($availableLocations as $loc)
+          <li>
+            <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('location-input').value = '{{ $loc }}'; this.closest('form').submit();">
+              {{ $loc }}
+            </a>
+          </li>
+        @endforeach
+      </ul>
+    </div>
+    <input type="hidden" name="location" id="location-input" value="{{ request('location') }}">
+  
+    <!-- Apply Button -->
+    <button type="submit" class="btn btn-outline-primary">Apply Filters</button>
+  
+    <!-- Reset Button -->
+    <a href="{{ route('applications.index') }}" class="btn btn-outline-dark">Reset</a>
+  </form>
+  
+</div>
 <div class="card">
   <h5 class="card-header">Job Applications</h5>
   <div class="table-responsive text-nowrap">
+    
+    
     <table class="table table-hover">
       <thead>
         <tr>

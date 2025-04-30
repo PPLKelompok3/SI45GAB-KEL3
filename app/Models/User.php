@@ -60,10 +60,11 @@ class User extends Authenticatable
 {
     return $this->belongsToMany(Skill::class, 'user_skills');
 }
-public function educations()
+public function education()
 {
-    return $this->hasMany(Education::class);
+    return $this->hasMany(\App\Models\Education::class);
 }
+
 public function experiences()
 {
     return $this->hasMany(Experience::class);

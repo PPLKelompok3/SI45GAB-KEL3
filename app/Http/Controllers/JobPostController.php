@@ -8,6 +8,7 @@ use App\Models\Company;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Models\JobApplication;
+use App\Models\Notification;
 
 class JobPostController extends Controller
 {
@@ -167,32 +168,70 @@ public function relatedJobs(Request $request, $id)
     //
     // abort(404);
 }
+// public function apply(Request $request, $id)
+// {
+//     // Prevent double-application
+//     $existing = JobApplication::where('job_id', $id)
+//                 ->where('user_id', Auth::id())
+//                 ->first();
+
+//     if ($existing) {
+//         return back()->with('error', 'You have already applied to this job.');
+//     }
+
+//     JobApplication::create([
+//         'job_id' => $id,
+//         'user_id' => Auth::id(),
+//         'status' => 'Pending', // default status
+//         'cover_letter' => $request->input('cover_letter', null),
+//     ]);
+//     $jobPost = JobPost::find($request->job_id);
+//     $recruiterId = $jobPost->company_id; // You may need to adjust if your relation is different
+
+//     // Create Notification
+//     Notification::create([
+//         'user_id' => $recruiterId, // HR user
+//         'type' => 'new_application',
+//         'content' => 'A new applicant applied for ' . $jobPost->title,
+//         'company_logo_url' => null, // Optional: set a logo if you have
+//         'is_read' => 0,
+//         'created_at' => now(),
+//         'updated_at' => now()
+//     ]);
+
+
+//     return redirect()->route('applicantdashboard')->with('success', 'Your test application has been submitted.');
+
+// }
+
 public function apply(Request $request, $id)
-{
-    // Prevent double-application
-    $existing = JobApplication::where('job_id', $id)
-                ->where('user_id', Auth::id())
-                ->first();
+    {
+        // 🔥 SKIP checking if already applied (so you can test freely)
 
-    if ($existing) {
-        return back()->with('error', 'You have already applied to this job.');
-    }
+        JobApplication::create([
+            'job_id' => $id,
+            'user_id' => Auth::id(),
+            'status' => 'Pending', // default status
+            'cover_letter' => $request->input('cover_letter', null),
+        ]);
 
-    JobApplication::create([
-        'job_id' => $id,
-        'user_id' => Auth::id(),
-        'status' => 'Pending', // default status
-        'cover_letter' => $request->input('cover_letter', null),
+        $jobPost = JobPost::find($id); // Still use $id
+$recruiterUsers = \App\Models\User::where('company_id', $jobPost->company_id)
+                    ->get(); // 🔥 find all users with same company_id
+
+foreach ($recruiterUsers as $recruiter) {
+    Notification::create([
+        'user_id' => $recruiter->id, // 🔥 Send to recruiter user id
+        'type' => 'new_application',
+        'content' => 'A new applicant applied for ' . $jobPost->title,
+        'company_logo_url' => null,
+        'is_read' => 0,
+        'created_at' => now(),
+        'updated_at' => now()
     ]);
-
-    return back()->with('success', 'Your application has been submitted.');
 }
 
+return redirect()->route('applicantdashboard')->with('success', 'Your test application has been submitted.');
 
-
-
-
-
-
-
+    }
 }

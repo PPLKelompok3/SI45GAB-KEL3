@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileSetupController;
 use App\Http\Controllers\RecruiterController;
+use App\Http\Controllers\LandingController;
 
 use Illuminate\Support\Facades\Route;
 

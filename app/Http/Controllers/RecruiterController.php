@@ -77,26 +77,48 @@ class RecruiterController extends Controller
         'company_name' => $request->company_name,
     ]);
 }
-public function applications()
+public function applications(Request $request)
 {
     $user = Auth::user();
-
-    // Get recruiter company ID
     $companyId = $user->company->id ?? null;
     if (!$companyId) {
         abort(403, 'You do not have a company profile.');
     }
 
-    // Get applications where the job's company matches recruiter
-    $applications = JobApplication::with(['user', 'job.company'])
-        ->whereHas('job', function ($query) use ($companyId) {
-            $query->where('company_id', $companyId);
-        })
-        ->latest()
-        ->get();
+    $query = JobApplication::with(['user.skills', 'user.education', 'user.profile', 'job.company'])
+        ->whereHas('job', function ($q) use ($companyId) {
+            $q->where('company_id', $companyId);
+        });
 
-    return view('recruiter.applicationindex', compact('applications'));
+    // Apply filters if present
+    if ($request->filled('skill')) {
+        $query->whereHas('user.skills', function ($q) use ($request) {
+            $q->where('name', $request->skill);
+        });
+    }
+
+    if ($request->filled('field')) {
+        $query->whereHas('user.education', function ($q) use ($request) {
+            $q->where('field_of_study', $request->field);
+        });
+    }
+
+    if ($request->filled('location')) {
+        $query->whereHas('user.profile', function ($q) use ($request) {
+            $q->where('location', 'like', '%' . $request->location . '%');
+        });
+    }
+
+    $applications = $query->latest()->get();
+
+    // Populate dropdown filter values
+    $availableSkills = \App\Models\Skill::pluck('name');
+    $availableFields = \App\Models\Education::distinct()->pluck('field_of_study');
+    $availableLocations = \App\Models\UserProfile::distinct()->pluck('location');
+
+    return view('recruiter.applicationindex', compact('applications', 'availableSkills', 'availableFields', 'availableLocations'));
 }
+
 
 
 }

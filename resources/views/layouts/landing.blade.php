@@ -73,29 +73,41 @@
               </ul>
             </nav>
 
-            <div class="right-cta-menu text-right d-flex aligin-items-center col-6">
+            <div class="right-cta-menu text-right d-flex align-items-center col-6">
               <div class="ml-auto">
-                <a href="{{ route('jobs.create') }}" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block"><span class="mr-2 icon-add"></span>Post a Job</a>
+            
+            
                 @auth
-                @if(auth()->user()->role === 'applicant')
-                  <a href="/applicantdashboard" class="btn btn-outline-primary">Dashboard</a>
-                @elseif(auth()->user()->role === 'recruiter')
-                  <a href="{{ route('recruiter.dashboard') }}" class="btn btn-outline-primary">Dashboard</a>
-                @endif
-              
-                <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-                  @csrf
-                  <button type="submit" class="btn btn-danger ms-2">Logout</button>
-                </form>
-              @else
-                <a href="{{ route('login') }}" class="btn btn-primary ms-2">Login</a>
-              @endauth
-              
+                  @if(auth()->user()->role === 'recruiter')
+                    <a href="{{ route('jobs.create') }}" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block">
+                      <span class="mr-2 icon-add"></span>Post a Job
+                    </a>
+                  @endif
+                @endauth
+            
+
+                @auth
+                  @if(auth()->user()->role === 'applicant')
+                    <a href="/applicantdashboard" class="btn btn-outline-primary">Dashboard</a>
+                  @elseif(auth()->user()->role === 'recruiter')
+                    <a href="{{ route('recruiter.dashboard') }}" class="btn btn-outline-primary">Dashboard</a>
+                  @endif
+            
+                  <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                    @csrf
+                    <button type="submit" class="btn btn-danger ms-2">Logout</button>
+                  </form>
+                @else
+                  <a href="{{ route('login') }}" class="btn btn-primary ms-2">Login</a>
+                @endauth
+            
               </div>
+            
               <a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3">
                 <span class="icon-menu h3 m-0 p-0 mt-2"></span>
               </a>
             </div>
+            
           </div>
         </div>
       </header>

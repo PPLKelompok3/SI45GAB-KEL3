@@ -18,25 +18,7 @@
         @endforeach
       </ul>
     </div>
-    <input type="hidden" name="skill" id="skill-input" value="{{ request('skill') }}">
-  
-    <!-- Field of Study Dropdown -->
-    <div class="btn-group">
-      <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
-        {{ request('field') ?? 'Filter by Field of Study' }}
-      </button>
-      <ul class="dropdown-menu">
-        @foreach ($availableFields as $field)
-          <li>
-            <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('field-input').value = '{{ $field }}'; this.closest('form').submit();">
-              {{ $field }}
-            </a>
-          </li>
-        @endforeach
-      </ul>
-    </div>
-    <input type="hidden" name="field" id="field-input" value="{{ request('field') }}">
-  
+    <input type="hidden" name="skill" id="skill-input" value="{{ request('skill') }}">  
     <!-- Location Dropdown -->
     <div class="btn-group">
       <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">

@@ -217,11 +217,11 @@ public function apply(Request $request, $id)
 
         $jobPost = JobPost::find($id); // Still use $id
 $recruiterUsers = \App\Models\User::where('company_id', $jobPost->company_id)
-                    ->get(); // 🔥 find all users with same company_id
+                    ->get(); 
 
 foreach ($recruiterUsers as $recruiter) {
     Notification::create([
-        'user_id' => $recruiter->id, // 🔥 Send to recruiter user id
+        'user_id' => $recruiter->id, 
         'type' => 'new_application',
         'content' => 'A new applicant applied for ' . $jobPost->title,
         'company_logo_url' => null,
@@ -234,4 +234,17 @@ foreach ($recruiterUsers as $recruiter) {
 return redirect()->route('applicantdashboard')->with('success', 'Your test application has been submitted.');
 
     }
+
+    public function index()
+    {
+        $user = Auth::user();
+        $companyId = $user->company_id;
+    
+        // Get only job posts belonging to recruiter's company
+        $jobs = \App\Models\JobPost::where('company_id', $companyId)->latest()->get();
+    
+        return view('recruiter.jobsindex', compact('jobs'));
+    }
+    
+    
 }

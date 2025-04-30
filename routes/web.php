@@ -60,11 +60,11 @@ Route::middleware(['auth', 'recruiter'])->group(function () {
     Route::get('/recruiter/profile', [RecruiterController::class, 'showProfileForm'])->name('recruiter.profile');
     Route::post('/recruiter/profile/store', [RecruiterController::class, 'storeProfile'])->name('recruiter.profile.store');
 
-    // Main Dashboard Page Route
-    Route::get('/dashboard', [RecruiterDashboardController::class, 'recruiterDashboard'])->name('recruiter.dashboard');
+    // // Main Dashboard Page Route
+    // Route::get('/dashboard', [RecruiterDashboardController::class, 'recruiterDashboard'])->name('recruiter.dashboard');
 
-    // Graph Data API Route
-    Route::get('/recruiter/dashboard/job-applicants-graph', [RecruiterDashboardController::class, 'getJobApplicantsGraph']);
+    // // Graph Data API Route
+    // Route::get('/recruiter/dashboard/job-applicants-graph', [RecruiterDashboardController::class, 'getJobApplicantsGraph']);
 
     Route::post('/recruiter/company/check', [RecruiterController::class, 'checkCompany'])->name('recruiter.company.check');
     Route::post('/recruiter/profile/store', [RecruiterController::class, 'storeProfile'])->name('recruiter.profile.store');

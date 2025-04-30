@@ -22,11 +22,8 @@ class JobApplication extends Model
     {
         return $this->hasMany(ApplicationStatusLog::class);
     }
-<<<<<<< HEAD
     public function job()
 {
     return $this->belongsTo(JobPost::class, 'job_id');
 }
-=======
->>>>>>> a511cf1 (PPL2025-35 Menambahkan fitur upload dan penyelesaian Profile Builder)
 }

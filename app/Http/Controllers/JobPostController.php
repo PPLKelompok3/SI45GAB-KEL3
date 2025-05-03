@@ -64,7 +64,7 @@ public function store(Request $request)
         \App\Models\Skill::firstOrCreate(['name' => $skillName]);
     }
 
-    return redirect()->route('dashboard')->with('success', 'Job posted!');
+    return redirect()->route('jobs.index')->with('success', 'Job posted!');
 }
 
 
@@ -113,21 +113,21 @@ public function update(Request $request, JobPost $job)
     // ✅ Update the job
     $job->update($data);
 
-    return redirect()->route('dashboard')->with('success', 'Job updated successfully.');
+    return redirect()->route('jobs.index')->with('success', 'Job updated successfully.');
 }
 
 
 public function destroy(JobPost $job)
 {
     $job->delete();
-    return redirect()->route('dashboard')->with('success', 'Job deleted!');
+    return redirect()->route('jobs.index')->with('success', 'Job deleted!');
 }
 public function toggleStatus(JobPost $job)
 {
     $job->status = $job->status === 'Active' ? 'Not Active' : 'Active';
     $job->save();
 
-    return back()->with('success', 'Job status updated to ' . $job->status);
+    return redirect()->route('jobs.index')->with('success', 'Job updated successfully.');
 }
 public function show($id, $slug = null)
 {
@@ -205,25 +205,39 @@ public function relatedJobs(Request $request, $id)
 // }
 
 public function apply(Request $request, $id)
-    {
-        // 🔥 SKIP checking if already applied (so you can test freely)
+{
+    JobApplication::create([
+        'job_id' => $id,
+        'user_id' => Auth::id(),
+        'status' => 'Pending',
+        'cover_letter' => $request->input('cover_letter', null),
+    ]);
 
-        JobApplication::create([
-            'job_id' => $id,
-            'user_id' => Auth::id(),
-            'status' => 'Pending', // default status
-            'cover_letter' => $request->input('cover_letter', null),
-        ]);
+    $jobPost = JobPost::find($id);
+    $recruiterUsers = \App\Models\User::where('company_id', $jobPost->company_id)->get();
 
-        $jobPost = JobPost::find($id); // Still use $id
-$recruiterUsers = \App\Models\User::where('company_id', $jobPost->company_id)
-                    ->get(); 
+    foreach ($recruiterUsers as $recruiter) {
+        $existingNotification = Notification::where('user_id', $recruiter->id)
+    ->where('type', 'new_application')
+    ->where('is_read', 0)
+    ->where('content', 'like', "%{$jobPost->title}%")
+    ->orderBy('updated_at', 'desc')
+    ->first();
 
-foreach ($recruiterUsers as $recruiter) {
+if ($existingNotification) {
+    preg_match('/^(\d+)\s+applicants/', $existingNotification->content, $matches);
+    $currentCount = isset($matches[1]) ? (int)$matches[1] : 1;
+    $newCount = $currentCount + 1;
+
+    $existingNotification->update([
+        'content' => "{$newCount} applicants applied for {$jobPost->title}",
+        'updated_at' => now()
+    ]);
+} else {
     Notification::create([
-        'user_id' => $recruiter->id, 
+        'user_id' => $recruiter->id,
         'type' => 'new_application',
-        'content' => 'A new applicant applied for ' . $jobPost->title,
+        'content' => "1 applicant applied for {$jobPost->title}",
         'company_logo_url' => null,
         'is_read' => 0,
         'created_at' => now(),
@@ -231,9 +245,11 @@ foreach ($recruiterUsers as $recruiter) {
     ]);
 }
 
-return redirect()->route('applicantdashboard')->with('success', 'Your test application has been submitted.');
-
     }
+
+    return redirect()->route('applicantdashboard')->with('success', 'Your test application has been submitted.');
+}
+
 
     public function index()
     {

@@ -79,10 +79,7 @@ public function storeEducation(Request $request)
     ]);
 
     $user = User::find(Auth::id());
-
-    // Delete old entries (replace mode)
-    $user->educations()->delete();
-
+    $user->education()->delete();
     foreach ($request->input('education', []) as $entry) {
         $user->educations()->create([
             'institution_name' => $entry['institution'] ?? null,

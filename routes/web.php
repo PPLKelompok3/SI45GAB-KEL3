@@ -88,6 +88,7 @@ Route::middleware(['auth', 'recruiter'])->group(function () {
     Route::get('/jobs/edit/{job}', [JobPostController::class, 'edit'])->name('jobs.edit');
     Route::patch('/jobs/{job}/toggle-status', [JobPostController::class, 'toggleStatus'])->name('jobs.toggle-status');
     Route::patch('/applications/{id}/update-status', [JobApplicationController::class, 'updateStatus'])->name('applications.update-status');
+    Route::get('/recruiter/notifications', [NotificationController::class, 'recruiterIndex'])->name('recruiter.notifications');
 
     
 

@@ -98,7 +98,7 @@
                     <button type="submit" class="btn btn-danger ms-2">Logout</button>
                   </form>
                 @else
-                  <a href="{{ route('login') }}" class="btn btn-primary ms-2">Login</a>
+                  <a dusk="login-button" href="{{ route('login') }}" class="btn btn-primary ms-2">Login</a>
                 @endauth
             
               </div>

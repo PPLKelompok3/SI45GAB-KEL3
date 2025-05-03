@@ -96,7 +96,7 @@
                   </label>
                 </div>
 
-                <button class="btn btn-primary d-grid w-100" style="background-color: #ffc901; border: none; color: #000;">Login</button>
+                <button dusk="LoginButton" class="btn btn-primary d-grid w-100" style="background-color: #ffc901; border: none; color: #000;">Login</button>
               </form>
 
               <p class="text-center mt-3">

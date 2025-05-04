@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Company;
 use App\Models\User;
+use App\Models\JobApplication;
 
 class RecruiterController extends Controller
 {
@@ -53,7 +54,7 @@ class RecruiterController extends Controller
 
     public function dashboard()
     {
-        return view('recruiterbuilder.dashboard');
+        return view('recruiter.dashboard');
     }
     public function checkCompany(Request $request)
 {
@@ -76,6 +77,48 @@ class RecruiterController extends Controller
         'company_name' => $request->company_name,
     ]);
 }
+public function applications(Request $request)
+{
+    $user = Auth::user();
+    $companyId = $user->company->id ?? null;
+    if (!$companyId) {
+        abort(403, 'You do not have a company profile.');
+    }
+
+    $query = JobApplication::with(['user.skills', 'user.education', 'user.profile', 'job.company'])
+        ->whereHas('job', function ($q) use ($companyId) {
+            $q->where('company_id', $companyId);
+        });
+
+    // Apply filters if present
+    if ($request->filled('skill')) {
+        $query->whereHas('user.skills', function ($q) use ($request) {
+            $q->where('name', $request->skill);
+        });
+    }
+
+    if ($request->filled('field')) {
+        $query->whereHas('user.education', function ($q) use ($request) {
+            $q->where('field_of_study', $request->field);
+        });
+    }
+
+    if ($request->filled('location')) {
+        $query->whereHas('user.profile', function ($q) use ($request) {
+            $q->where('location', 'like', '%' . $request->location . '%');
+        });
+    }
+
+    $applications = $query->latest()->get();
+
+    // Populate dropdown filter values
+    $availableSkills = \App\Models\Skill::pluck('name');
+    $availableFields = \App\Models\Education::distinct()->pluck('field_of_study');
+    $availableLocations = \App\Models\UserProfile::distinct()->pluck('location');
+
+    return view('recruiter.applicationindex', compact('applications', 'availableSkills', 'availableFields', 'availableLocations'));
+}
+
 
 
 }

@@ -1440,21 +1440,21 @@
         },
         {
             "name": "hamcrest/hamcrest-php",
-            "version": "v2.0.1",
-            "version_normalized": "2.0.1.0",
+            "version": "v2.1.1",
+            "version_normalized": "2.1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hamcrest/hamcrest-php.git",
-                "reference": "8c3d0a3f6af734494ad8f6fbbee0ba92422859f3"
+                "reference": "f8b1c0173b22fa6ec77a81fe63e5b01eba7e6487"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hamcrest/hamcrest-php/zipball/8c3d0a3f6af734494ad8f6fbbee0ba92422859f3",
-                "reference": "8c3d0a3f6af734494ad8f6fbbee0ba92422859f3",
+                "url": "https://api.github.com/repos/hamcrest/hamcrest-php/zipball/f8b1c0173b22fa6ec77a81fe63e5b01eba7e6487",
+                "reference": "f8b1c0173b22fa6ec77a81fe63e5b01eba7e6487",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.3|^7.0|^8.0"
+                "php": "^7.4|^8.0"
             },
             "replace": {
                 "cordoval/hamcrest-php": "*",
@@ -1462,10 +1462,10 @@
                 "kodova/hamcrest-php": "*"
             },
             "require-dev": {
-                "phpunit/php-file-iterator": "^1.4 || ^2.0",
-                "phpunit/phpunit": "^4.8.36 || ^5.7 || ^6.5 || ^7.0"
+                "phpunit/php-file-iterator": "^1.4 || ^2.0 || ^3.0",
+                "phpunit/phpunit": "^4.8.36 || ^5.7 || ^6.5 || ^7.0 || ^8.0 || ^9.0"
             },
-            "time": "2020-07-09T08:09:16+00:00",
+            "time": "2025-04-30T06:54:44+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1488,7 +1488,7 @@
             ],
             "support": {
                 "issues": "https://github.com/hamcrest/hamcrest-php/issues",
-                "source": "https://github.com/hamcrest/hamcrest-php/tree/v2.0.1"
+                "source": "https://github.com/hamcrest/hamcrest-php/tree/v2.1.1"
             },
             "install-path": "../hamcrest/hamcrest-php"
         },
@@ -1620,18 +1620,95 @@
             "install-path": "../laravel/breeze"
         },
         {
-            "name": "laravel/framework",
-            "version": "v12.9.2",
-            "version_normalized": "12.9.2.0",
+            "name": "laravel/dusk",
+            "version": "v8.3.2",
+            "version_normalized": "8.3.2.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/laravel/framework.git",
-                "reference": "3db59aa0f382c349c78a92f3e5b5522e00e3301b"
+                "url": "https://github.com/laravel/dusk.git",
+                "reference": "bb701836357bf6f6c6658ef90b5a0f8232affb0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/3db59aa0f382c349c78a92f3e5b5522e00e3301b",
-                "reference": "3db59aa0f382c349c78a92f3e5b5522e00e3301b",
+                "url": "https://api.github.com/repos/laravel/dusk/zipball/bb701836357bf6f6c6658ef90b5a0f8232affb0f",
+                "reference": "bb701836357bf6f6c6658ef90b5a0f8232affb0f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-zip": "*",
+                "guzzlehttp/guzzle": "^7.5",
+                "illuminate/console": "^10.0|^11.0|^12.0",
+                "illuminate/support": "^10.0|^11.0|^12.0",
+                "php": "^8.1",
+                "php-webdriver/webdriver": "^1.15.2",
+                "symfony/console": "^6.2|^7.0",
+                "symfony/finder": "^6.2|^7.0",
+                "symfony/process": "^6.2|^7.0",
+                "vlucas/phpdotenv": "^5.2"
+            },
+            "require-dev": {
+                "laravel/framework": "^10.0|^11.0|^12.0",
+                "mockery/mockery": "^1.6",
+                "orchestra/testbench-core": "^8.19|^9.0|^10.0",
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^10.1|^11.0|^12.0.1",
+                "psy/psysh": "^0.11.12|^0.12",
+                "symfony/yaml": "^6.2|^7.0"
+            },
+            "suggest": {
+                "ext-pcntl": "Used to gracefully terminate Dusk when tests are running."
+            },
+            "time": "2025-02-20T14:42:00+00:00",
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Dusk\\DuskServiceProvider"
+                    ]
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Dusk\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "Laravel Dusk provides simple end-to-end testing and browser automation.",
+            "keywords": [
+                "laravel",
+                "testing",
+                "webdriver"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/dusk/issues",
+                "source": "https://github.com/laravel/dusk/tree/v8.3.2"
+            },
+            "install-path": "../laravel/dusk"
+        },
+        {
+            "name": "laravel/framework",
+            "version": "v12.11.1",
+            "version_normalized": "12.11.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/framework.git",
+                "reference": "bd0d62bd9c5196728e428cd695d89ec8640daac1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/bd0d62bd9c5196728e428cd695d89ec8640daac1",
+                "reference": "bd0d62bd9c5196728e428cd695d89ec8640daac1",
                 "shasum": ""
             },
             "require": {
@@ -1787,7 +1864,7 @@
                 "symfony/postmark-mailer": "Required to enable support for the Postmark mail transport (^7.2).",
                 "symfony/psr-http-message-bridge": "Required to use PSR-7 bridging features (^7.2)."
             },
-            "time": "2025-04-16T15:44:19+00:00",
+            "time": "2025-04-30T13:48:39+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -2051,17 +2128,17 @@
         },
         {
             "name": "laravel/sail",
-            "version": "v1.41.0",
-            "version_normalized": "1.41.0.0",
+            "version": "v1.42.0",
+            "version_normalized": "1.42.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sail.git",
-                "reference": "fe1a4ada0abb5e4bd99eb4e4b0d87906c00cdeec"
+                "reference": "2edaaf77f3c07a4099965bb3d7dfee16e801c0f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sail/zipball/fe1a4ada0abb5e4bd99eb4e4b0d87906c00cdeec",
-                "reference": "fe1a4ada0abb5e4bd99eb4e4b0d87906c00cdeec",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/2edaaf77f3c07a4099965bb3d7dfee16e801c0f6",
+                "reference": "2edaaf77f3c07a4099965bb3d7dfee16e801c0f6",
                 "shasum": ""
             },
             "require": {
@@ -2076,7 +2153,7 @@
                 "orchestra/testbench": "^7.0|^8.0|^9.0|^10.0",
                 "phpstan/phpstan": "^1.10"
             },
-            "time": "2025-01-24T15:45:36+00:00",
+            "time": "2025-04-29T14:26:46+00:00",
             "bin": [
                 "bin/sail"
             ],
@@ -2114,6 +2191,73 @@
                 "source": "https://github.com/laravel/sail"
             },
             "install-path": "../laravel/sail"
+        },
+        {
+            "name": "laravel/sanctum",
+            "version": "v4.1.1",
+            "version_normalized": "4.1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/sanctum.git",
+                "reference": "a360a6a1fd2400ead4eb9b6a9c1bb272939194f5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/sanctum/zipball/a360a6a1fd2400ead4eb9b6a9c1bb272939194f5",
+                "reference": "a360a6a1fd2400ead4eb9b6a9c1bb272939194f5",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "illuminate/console": "^11.0|^12.0",
+                "illuminate/contracts": "^11.0|^12.0",
+                "illuminate/database": "^11.0|^12.0",
+                "illuminate/support": "^11.0|^12.0",
+                "php": "^8.2",
+                "symfony/console": "^7.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.6",
+                "orchestra/testbench": "^9.0|^10.0",
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^11.3"
+            },
+            "time": "2025-04-23T13:03:38+00:00",
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Sanctum\\SanctumServiceProvider"
+                    ]
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Sanctum\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "Laravel Sanctum provides a featherweight authentication system for SPAs and simple APIs.",
+            "keywords": [
+                "auth",
+                "laravel",
+                "sanctum"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/sanctum/issues",
+                "source": "https://github.com/laravel/sanctum"
+            },
+            "install-path": "../laravel/sanctum"
         },
         {
             "name": "laravel/serializable-closure",
@@ -3014,17 +3158,17 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.13.0",
-            "version_normalized": "1.13.0.0",
+            "version": "1.13.1",
+            "version_normalized": "1.13.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "024473a478be9df5fdaca2c793f2232fe788e414"
+                "reference": "1720ddd719e16cf0db4eb1c6eca108031636d46c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/024473a478be9df5fdaca2c793f2232fe788e414",
-                "reference": "024473a478be9df5fdaca2c793f2232fe788e414",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/1720ddd719e16cf0db4eb1c6eca108031636d46c",
+                "reference": "1720ddd719e16cf0db4eb1c6eca108031636d46c",
                 "shasum": ""
             },
             "require": {
@@ -3040,7 +3184,7 @@
                 "phpspec/prophecy": "^1.10",
                 "phpunit/phpunit": "^7.5.20 || ^8.5.23 || ^9.5.13"
             },
-            "time": "2025-02-12T12:17:51+00:00",
+            "time": "2025-04-29T12:36:36+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -3065,7 +3209,7 @@
             ],
             "support": {
                 "issues": "https://github.com/myclabs/DeepCopy/issues",
-                "source": "https://github.com/myclabs/DeepCopy/tree/1.13.0"
+                "source": "https://github.com/myclabs/DeepCopy/tree/1.13.1"
             },
             "funding": [
                 {
@@ -3854,30 +3998,30 @@
         },
         {
             "name": "pestphp/pest-plugin-laravel",
-            "version": "v3.1.0",
-            "version_normalized": "3.1.0.0",
+            "version": "v3.2.0",
+            "version_normalized": "3.2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pestphp/pest-plugin-laravel.git",
-                "reference": "1c4e994476375c72aa7aebaaa97aa98f5d5378cd"
+                "reference": "6801be82fd92b96e82dd72e563e5674b1ce365fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pestphp/pest-plugin-laravel/zipball/1c4e994476375c72aa7aebaaa97aa98f5d5378cd",
-                "reference": "1c4e994476375c72aa7aebaaa97aa98f5d5378cd",
+                "url": "https://api.github.com/repos/pestphp/pest-plugin-laravel/zipball/6801be82fd92b96e82dd72e563e5674b1ce365fc",
+                "reference": "6801be82fd92b96e82dd72e563e5674b1ce365fc",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "^11.39.1|^12.0.0",
-                "pestphp/pest": "^3.7.4",
+                "laravel/framework": "^11.39.1|^12.9.2",
+                "pestphp/pest": "^3.8.2",
                 "php": "^8.2.0"
             },
             "require-dev": {
                 "laravel/dusk": "^8.2.13|dev-develop",
-                "orchestra/testbench": "^9.9.0|^10.0.0",
-                "pestphp/pest-dev-tools": "^3.3.0"
+                "orchestra/testbench": "^9.9.0|^10.2.1",
+                "pestphp/pest-dev-tools": "^3.4.0"
             },
-            "time": "2025-01-24T13:22:39+00:00",
+            "time": "2025-04-21T07:40:53+00:00",
             "type": "library",
             "extra": {
                 "pest": {
@@ -3915,7 +4059,7 @@
                 "unit"
             ],
             "support": {
-                "source": "https://github.com/pestphp/pest-plugin-laravel/tree/v3.1.0"
+                "source": "https://github.com/pestphp/pest-plugin-laravel/tree/v3.2.0"
             },
             "funding": [
                 {
@@ -4127,6 +4271,75 @@
                 "source": "https://github.com/phar-io/version/tree/3.2.1"
             },
             "install-path": "../phar-io/version"
+        },
+        {
+            "name": "php-webdriver/webdriver",
+            "version": "1.15.2",
+            "version_normalized": "1.15.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-webdriver/php-webdriver.git",
+                "reference": "998e499b786805568deaf8cbf06f4044f05d91bf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-webdriver/php-webdriver/zipball/998e499b786805568deaf8cbf06f4044f05d91bf",
+                "reference": "998e499b786805568deaf8cbf06f4044f05d91bf",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-zip": "*",
+                "php": "^7.3 || ^8.0",
+                "symfony/polyfill-mbstring": "^1.12",
+                "symfony/process": "^5.0 || ^6.0 || ^7.0"
+            },
+            "replace": {
+                "facebook/webdriver": "*"
+            },
+            "require-dev": {
+                "ergebnis/composer-normalize": "^2.20.0",
+                "ondram/ci-detector": "^4.0",
+                "php-coveralls/php-coveralls": "^2.4",
+                "php-mock/php-mock-phpunit": "^2.0",
+                "php-parallel-lint/php-parallel-lint": "^1.2",
+                "phpunit/phpunit": "^9.3",
+                "squizlabs/php_codesniffer": "^3.5",
+                "symfony/var-dumper": "^5.0 || ^6.0 || ^7.0"
+            },
+            "suggest": {
+                "ext-SimpleXML": "For Firefox profile creation"
+            },
+            "time": "2024-11-21T15:12:59+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "files": [
+                    "lib/Exception/TimeoutException.php"
+                ],
+                "psr-4": {
+                    "Facebook\\WebDriver\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A PHP client for Selenium WebDriver. Previously facebook/webdriver.",
+            "homepage": "https://github.com/php-webdriver/php-webdriver",
+            "keywords": [
+                "Chromedriver",
+                "geckodriver",
+                "php",
+                "selenium",
+                "webdriver"
+            ],
+            "support": {
+                "issues": "https://github.com/php-webdriver/php-webdriver/issues",
+                "source": "https://github.com/php-webdriver/php-webdriver/tree/1.15.2"
+            },
+            "install-path": "../php-webdriver/webdriver"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -9036,31 +9249,31 @@
         },
         {
             "name": "ta-tikoma/phpunit-architecture-test",
-            "version": "0.8.4",
-            "version_normalized": "0.8.4.0",
+            "version": "0.8.5",
+            "version_normalized": "0.8.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ta-tikoma/phpunit-architecture-test.git",
-                "reference": "89f0dea1cb0f0d5744d3ec1764a286af5e006636"
+                "reference": "cf6fb197b676ba716837c886baca842e4db29005"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ta-tikoma/phpunit-architecture-test/zipball/89f0dea1cb0f0d5744d3ec1764a286af5e006636",
-                "reference": "89f0dea1cb0f0d5744d3ec1764a286af5e006636",
+                "url": "https://api.github.com/repos/ta-tikoma/phpunit-architecture-test/zipball/cf6fb197b676ba716837c886baca842e4db29005",
+                "reference": "cf6fb197b676ba716837c886baca842e4db29005",
                 "shasum": ""
             },
             "require": {
                 "nikic/php-parser": "^4.18.0 || ^5.0.0",
                 "php": "^8.1.0",
                 "phpdocumentor/reflection-docblock": "^5.3.0",
-                "phpunit/phpunit": "^10.5.5  || ^11.0.0",
+                "phpunit/phpunit": "^10.5.5  || ^11.0.0 || ^12.0.0",
                 "symfony/finder": "^6.4.0 || ^7.0.0"
             },
             "require-dev": {
                 "laravel/pint": "^1.13.7",
                 "phpstan/phpstan": "^1.10.52"
             },
-            "time": "2024-01-05T14:10:56+00:00",
+            "time": "2025-04-20T20:23:40+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -9092,7 +9305,7 @@
             ],
             "support": {
                 "issues": "https://github.com/ta-tikoma/phpunit-architecture-test/issues",
-                "source": "https://github.com/ta-tikoma/phpunit-architecture-test/tree/0.8.4"
+                "source": "https://github.com/ta-tikoma/phpunit-architecture-test/tree/0.8.5"
             },
             "install-path": "../ta-tikoma/phpunit-architecture-test"
         },
@@ -9443,6 +9656,7 @@
         "hamcrest/hamcrest-php",
         "jean85/pretty-package-versions",
         "laravel/breeze",
+        "laravel/dusk",
         "laravel/pail",
         "laravel/pint",
         "laravel/sail",
@@ -9456,6 +9670,7 @@
         "pestphp/pest-plugin-mutate",
         "phar-io/manifest",
         "phar-io/version",
+        "php-webdriver/webdriver",
         "phpdocumentor/reflection-common",
         "phpdocumentor/reflection-docblock",
         "phpdocumentor/type-resolver",

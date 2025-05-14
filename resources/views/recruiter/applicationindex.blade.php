@@ -69,7 +69,7 @@
           </td>
           <td>{{ $application->created_at->format('M d, Y') }}</td>
           <td>
-            <a href="{{ route('applications.show', $application->id) }}" dusk="view-application-{{ $application->id }}" class="btn btn-sm btn-primary">
+            <a href="{{ route('applications.show', $application->id) }}" class="btn btn-sm btn-primary">
               View Details
             </a>            
           </td>

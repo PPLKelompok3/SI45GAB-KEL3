@@ -14,7 +14,7 @@ class RekomendasiTest extends DuskTestCase
             $browser->visit('/login')
                     ->type('email', 'ayesaimut@gmail.com') // ganti dengan email valid
                     ->type('password', '12345678') // ganti dengan password valid
-                    ->press('Login')
+                    ->press ('Login')
 
                     // Click Canva skill tag (add dusk attribute if needed)
                     ->clickLink('Canva')

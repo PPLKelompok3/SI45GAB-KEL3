@@ -9,6 +9,7 @@ use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RecruiterDashboardController;
+use App\Http\Controllers\AdminController;
 use App\Models\Notification;
 use Illuminate\Support\Facades\Route;
 
@@ -24,7 +25,7 @@ Route::get('/jobs/{id}/related', [JobPostController::class, 'relatedJobs'])->nam
 Route::post('/jobs/{id}/apply', [JobPostController::class, 'apply'])->middleware('auth')->name('jobs.apply');
 
 
-
+Route::get('/admindashboard', [AdminController::class, 'adminDashboard'])->name('admin.dashboard');
 
 
 
@@ -96,9 +97,8 @@ Route::middleware(['auth', 'recruiter'])->group(function () {
 ///TEMPORARY///
 
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+
+
 
 
 

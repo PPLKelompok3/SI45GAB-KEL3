@@ -101,6 +101,7 @@
           background-color: #eef3fd;
           border-left: 4px solid #4361ee;
       }
+      
       </style>
 </head>
 
@@ -129,46 +130,12 @@
 
                 <ul class="menu-inner py-1">
                     <!-- Dashboard -->
-                    <li class="menu-item {{ request()->routeIs('recruiter.dashboard') ? 'active' : '' }}">
+                    <li class="menu-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                         <a href="{{ route('recruiter.dashboard') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div data-i18n="Analytics">Dashboard</div>
                         </a>
                     </li>
-                    <!-- Layouts -->
-                    <li class="menu-item {{ request()->routeIs('applications.index') ? 'active' : '' }}">
-                        <a href="{{ route('applications.index') }}" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                            <div data-i18n="Analytics">Application</div>
-                        </a>
-                    </li>
-                    <li class="menu-item {{ request()->routeIs('jobs.create') || request()->routeIs('jobs.index') ? 'active open' : '' }}">
-                      <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-layout"></i>
-                        <div data-i18n="Layouts">Jobs Posts</div>
-                      </a>
-                    
-                      <ul class="menu-sub">
-                        <li class="menu-item {{ request()->routeIs('jobs.create') ? 'active' : '' }}">
-                          <a href="{{ route('jobs.create') }}" class="menu-link">
-                            <div data-i18n="Create New Job Post">Create New Job Post</div>
-                          </a>
-                        </li>
-                    
-                        <li class="menu-item {{ request()->routeIs('jobs.index') ? 'active' : '' }}">
-                          <a href="{{ route('jobs.index') }}" class="menu-link">
-                            <div data-i18n="Without navbar">Job Posts List</div>
-                          </a>
-                        </li>
-                      </ul>
-                    </li>
-                    {{-- <li class="menu-item {{ request()->routeIs('recruiter.notifications') ? 'active' : '' }}">
-                        <a href="{{ route('recruiter.notifications') }}" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                            <div data-i18n="Analytics">Notifications</div>
-                        </a>
-                    </li> --}}
-                    
                 </ul>
             </aside>
             <div class="layout-page">

@@ -25,7 +25,12 @@ Route::get('/jobs/{id}/related', [JobPostController::class, 'relatedJobs'])->nam
 Route::post('/jobs/{id}/apply', [JobPostController::class, 'apply'])->middleware('auth')->name('jobs.apply');
 
 
-Route::get('/admindashboard', [AdminController::class, 'adminDashboard'])->name('admin.dashboard');
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admindashboard', [AdminController::class, 'adminDashboard'])->name('admin.dashboard');
+    Route::patch('/admin/verify-recruiter/{id}', [AdminController::class, 'verifyRecruiter'])->name('admin.verifyRecruiter');
+});
+
+
 
 
 

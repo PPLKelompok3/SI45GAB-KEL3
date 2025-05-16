@@ -62,7 +62,7 @@ Route::middleware(['auth', 'applicant'])->group(function () {
 });
 
 // Recruiter-only access
-Route::middleware(['auth', 'recruiter'])->group(function () {
+Route::middleware(['auth', 'verified.recruiter'])->group(function () {
     Route::get('/recruiter/profile', [RecruiterController::class, 'showProfileForm'])->name('recruiter.profile');
     Route::post('/recruiter/profile/store', [RecruiterController::class, 'storeProfile'])->name('recruiter.profile.store');
 
@@ -82,7 +82,7 @@ Route::middleware(['auth', 'recruiter'])->group(function () {
     
 
 
-Route::middleware(['auth', 'recruiter'])->group(function () {
+Route::middleware(['auth', 'verified.recruiter'])->group(function () {
     // Route::get('/', [JobPostController::class, 'index'])->name('jobs.index');
     Route::get('/create', [JobPostController::class, 'create'])->name('jobs.create');
     Route::post('/store', [JobPostController::class, 'store'])->name('jobs.store');
@@ -101,6 +101,9 @@ Route::middleware(['auth', 'recruiter'])->group(function () {
 });
 ///TEMPORARY///
 
+Route::get('/recruiter/unverified', function () {
+    return view('recruiter.unverified');
+})->name('recruiter.unverified');
 
 
 

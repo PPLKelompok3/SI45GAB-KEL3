@@ -37,7 +37,7 @@ test('Job Edit', function () {
         $browser->visit('/jobs')
         ->assertSee('My Job')
         ->clickLink('Edit')
-        ->assertPathIs('/jobs/edit/27')
+        ->assertPathIs('/jobs/edit/26')
         ->assertSee('Edit')
         ->type('title', 'Data Scientist')
         ->press('Update Job')

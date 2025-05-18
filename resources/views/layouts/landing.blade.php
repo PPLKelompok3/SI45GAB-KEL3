@@ -88,10 +88,13 @@
 
                 @auth
                   @if(auth()->user()->role === 'applicant')
-                    <a href="/applicantdashboard" class="btn btn-outline-primary">Dashboard</a>
-                  @elseif(auth()->user()->role === 'recruiter')
-                    <a href="{{ route('recruiter.dashboard') }}" class="btn btn-outline-primary">Dashboard</a>
-                  @endif
+    <a href="/applicantdashboard" class="btn btn-outline-primary">Dashboard</a>
+@elseif(auth()->user()->role === 'recruiter')
+    <a href="{{ route('recruiter.dashboard') }}" class="btn btn-outline-primary">Dashboard</a>
+@elseif(auth()->user()->role === 'admin')
+    <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-primary">Admin Dashboard</a>
+@endif
+
             
                   <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                     @csrf

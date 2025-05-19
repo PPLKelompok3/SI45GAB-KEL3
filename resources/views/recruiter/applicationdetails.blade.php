@@ -80,7 +80,7 @@
                 @csrf
                 @method('PATCH')
               
-                <select name="status" class="form-select mb-3" id="status-dropdown">
+                <select name="status" class="form-select mb-3" id="status-dropdown" dusk="status-select">
                   <option value="Pending" {{ $application->status == 'Pending' ? 'selected' : '' }}>Pending</option>
                   <option value="Processed" {{ $application->status == 'Processed' ? 'selected' : '' }}>Processed</option>
                   <option value="Interview" {{ $application->status == 'Interview' ? 'selected' : '' }}>Interview</option>
@@ -88,7 +88,7 @@
                   <option value="Rejected" {{ $application->status == 'Rejected' ? 'selected' : '' }}>Rejected</option>
                 </select>
               
-                <button type="submit" class="btn btn-primary mt-2">
+                <button dusk="apply-status-button" type="submit" class="btn btn-primary mt-2">
                   Apply Status
                 </button>
               </form> 

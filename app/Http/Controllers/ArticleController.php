@@ -60,15 +60,51 @@ public function create()
     $skillSuggestions = Skill::pluck('name');
     return view('articles.create', compact('skillSuggestions'));
 }
-public function index()
+public function index(Request $request)
 {
-    $articles = Article::with('author') // optional: eager-load author
-        ->where('status', 'published')
-        ->latest()
-        ->paginate(6); // adjust pagination as needed
+    $user = auth::user();
 
-    return view('articles.index', compact('articles'));
+    $baseQuery = Article::with('user', 'skills')->where('status', 'published');
+
+    $recommended = collect();
+    $nonRecommended = collect();
+
+    // Step 1: Get skill filter from URL (e.g. ?skill=Laravel)
+    $filterSkill = $request->query('skill');
+
+    // Step 2: Recommendation logic for logged-in user
+    if ($user) {
+        /** @var \App\Models\User $user */
+        $userSkillIds = $user->skills()->pluck('skills.id');
+
+        $recommended = (clone $baseQuery)
+            ->whereHas('skills', fn($q) => $q->whereIn('skills.id', $userSkillIds))
+            ->latest()
+            ->take(6)
+            ->get();
+
+        $nonRecommended = (clone $baseQuery)
+            ->whereDoesntHave('skills', fn($q) => $q->whereIn('skills.id', $userSkillIds));
+    } else {
+        $nonRecommended = clone $baseQuery;
+    }
+
+    // Step 3: Apply skill filter to nonRecommended list
+    if ($filterSkill) {
+        $nonRecommended->whereHas('skills', function ($q) use ($filterSkill) {
+            $q->where('name', $filterSkill);
+        });
+    }
+
+    $nonRecommended = $nonRecommended->latest()->paginate(6);
+
+    $availableSkills = \App\Models\Skill::pluck('name');
+    return view('articles.index', compact('recommended', 'nonRecommended', 'availableSkills'));
+
 }
+
+
+
 
 
 public function show(Article $article)

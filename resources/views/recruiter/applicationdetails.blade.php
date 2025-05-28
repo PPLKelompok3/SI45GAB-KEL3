@@ -90,10 +90,10 @@
     <!-- Feedback and Score -->
     <div id="feedback-section" class="mb-4" style="display: none;">
       <label for="score" class="form-label fw-bold">Score (1–100)</label>
-      <input type="number" class="form-control w-50 mb-3" id="score" name="score" min="1" max="100">
+      <input type="number" class="form-control w-50 mb-3" id="score" name="score" min="1" max="100" value="{{ $application->score }}">
 
       <label for="feedback" class="form-label fw-bold">Feedback</label>
-      <textarea class="form-control w-75" id="feedback" name="feedback" rows="3"></textarea>
+      <textarea class="form-control w-75" id="feedback" name="feedback" rows="3">{{ old('feedback', $application->feedback) }}</textarea>
     </div>
 
     <div class="text-end">

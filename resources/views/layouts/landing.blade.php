@@ -15,12 +15,20 @@
     <link rel="stylesheet" href="{{ asset('assets/css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.min.css" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
 
     <style>
       .selected-skill {
         background-color: #ffa500 !important; /* darker orange */
         color: white !important;
       }
+      .article-thumbnail {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 8px;
+}
     </style>
     
 
@@ -58,18 +66,17 @@
 
             <nav class="mx-auto site-navigation">
               <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
-                <li><a href="{{ url('/') }}" class="nav-link active">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Job Listings</a></li>
-                <li class="has-children">
-                  <a href="#">Pages</a>
-                  <ul class="dropdown">
-                    <li><a href="#">Service</a></li>
-                    <li><a href="#">Portfolio</a></li>
-                    <li><a href="#">Blog</a></li>
-                  </ul>
-                </li>
-                <li><a href="#">Contact</a></li>
+              <li>
+  <a href="{{ url('/') }}" class="nav-link {{ request()->is('/') ? 'active' : '' }}">Home</a>
+</li>
+<li>
+  <a href="{{ route('articles.index') }}" class="nav-link {{ request()->is('articles*') ? 'active' : '' }}">Articles</a>
+</li>
+
+
+                <li>
+  <a href="{{ route('profile.show') }}" class="nav-link {{ request()->is('profilepage*') ? 'active' : '' }}">Profile</a>
+</li>
               </ul>
             </nav>
 

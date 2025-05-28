@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class JobApplication extends Model
 {
     use HasFactory;
-    protected $fillable = ['job_id', 'user_id', 'status', 'cover_letter','interview_date'];
+    protected $fillable = ['job_id', 'user_id', 'status', 'cover_letter','interview_date','score','feedback'];
 
     public function jobPost()
     {

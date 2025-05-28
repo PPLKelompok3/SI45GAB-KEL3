@@ -136,12 +136,12 @@
                         </a>
                     </li>
                     <!-- Layouts -->
-                    <li class="menu-item {{ request()->routeIs('applications.index') ? 'active' : '' }}">
+                    {{-- <li class="menu-item {{ request()->routeIs('applications.index') ? 'active' : '' }}">
                         <a href="{{ route('applications.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div data-i18n="Analytics">Application</div>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="menu-item {{ request()->routeIs('jobs.create') || request()->routeIs('jobs.index') ? 'active open' : '' }}">
                       <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon tf-icons bx bx-layout"></i>

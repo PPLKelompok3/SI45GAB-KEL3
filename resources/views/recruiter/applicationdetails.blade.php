@@ -62,89 +62,114 @@
   </div>
 </div>
 
-<h5 class="pb-1 mb-4">Status and Interview Schedule</h5>
-<div class="row mb-5 d-flex align-items-stretch">
-    <!-- Status and Action Card -->
-    <div class="col-md-6 d-flex">
-      <div class="card mb-3 w-100 h-100">
-        <div class="card-body text-center">
-          <h5 class="card-title mb-4">Current Status</h5>
-  
-          <h2 id="current-status" class="text-primary mb-4" style="font-weight: bold;">
-            {{ $application->status }}
-          </h2>
-          
-  
-          <div class="mb-3">
-            <form action="{{ route('applications.updateStatus', $application->id) }}" method="POST">
-                @csrf
-                @method('PATCH')
-              
-                <select name="status" class="form-select mb-3" id="status-dropdown" dusk="status-select">
-                  <option value="Pending" {{ $application->status == 'Pending' ? 'selected' : '' }}>Pending</option>
-                  <option value="Processed" {{ $application->status == 'Processed' ? 'selected' : '' }}>Processed</option>
-                  <option value="Interview" {{ $application->status == 'Interview' ? 'selected' : '' }}>Interview</option>
-                  <option value="Accepted" {{ $application->status == 'Accepted' ? 'selected' : '' }}>Accepted</option>
-                  <option value="Rejected" {{ $application->status == 'Rejected' ? 'selected' : '' }}>Rejected</option>
-                </select>
-              
-                <button dusk="apply-status-button" type="submit" class="btn btn-primary mt-2">
-                  Apply Status
-                </button>
-              </form> 
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    <!-- Interview Date Picker Card -->
-    <div class="col-md-6 d-flex">
-        <div class="card mb-3 w-100 h-100">
-          <div class="card-body text-center" id="calendar-card">
-          <h5 class="card-title mb-4">Interview Schedule</h5>
-          <input type="date" id="interview-date" class="form-control mb-3"
-       value="{{ $application->interview_date }}" 
-       {{ $application->status == 'Interview' ? '' : 'disabled' }}>
+<h5 class="pb-1 mb-4">Update Application Status</h5>
+<div class="card mb-5 w-100">
+  <form action="{{ route('applications.updateStatus', $application->id) }}" method="POST" class="card-body">
+    @csrf
+    @method('PATCH')
 
-  
-          <p class="card-text">
-            <small class="text-muted">Pick an interview date once status is set to Interview.</small>
-          </p>
-        </div>
-      </div>
+    <!-- Status -->
+    <div class="mb-4">
+      <label for="status-dropdown" class="form-label fw-bold">Current Status: <span class="text-primary fw-bold">{{ $application->status }}</span></label>
+      <select name="status" class="form-select w-50" id="status-dropdown">
+        <option value="Pending" {{ $application->status == 'Pending' ? 'selected' : '' }}>Pending</option>
+        <option value="Processed" {{ $application->status == 'Processed' ? 'selected' : '' }}>Processed</option>
+        <option value="Interview" {{ $application->status == 'Interview' ? 'selected' : '' }}>Interview</option>
+        <option value="Accepted" {{ $application->status == 'Accepted' ? 'selected' : '' }}>Accepted</option>
+        <option value="Rejected" {{ $application->status == 'Rejected' ? 'selected' : '' }}>Rejected</option>
+      </select>
     </div>
-  </div>
+
+    <!-- Interview Date Picker -->
+    <div id="interview-date-section" class="mb-4" style="display: none;">
+      <label for="interview-date" class="form-label fw-bold">Interview Date</label>
+      <input type="date" name="interview_date" class="form-control w-50" id="interview-date"
+        value="{{ $application->interview_date }}">
+    </div>
+
+    <!-- Feedback and Score -->
+    <div id="feedback-section" class="mb-4" style="display: none;">
+      <label for="score" class="form-label fw-bold">Score (1–100)</label>
+      <input type="number" class="form-control w-50 mb-3" id="score" name="score" min="1" max="100" value="{{ $application->score }}">
+
+      <label for="feedback" class="form-label fw-bold">Feedback</label>
+      <textarea class="form-control w-75" id="feedback" name="feedback" rows="3">{{ old('feedback', $application->feedback) }}</textarea>
+    </div>
+
+    <div class="text-end">
+      <button type="submit" class="btn btn-primary">Apply Status</button>
+    </div>
+  </form>
+</div>
+
+
+
   
 @endsection
 
 @push('scripts')
 <script>
-    document.getElementById('apply-status-btn').addEventListener('click', function() {
-      const selectedStatus = document.getElementById('status-dropdown').value;
-      const statusElement = document.getElementById('current-status');
-      const calendarCard = document.getElementById('calendar-card');
-      const interviewDateInput = document.getElementById('interview-date');
-    
-      // Update text
-      statusElement.textContent = selectedStatus;
-    
-      // Color change for "Accepted" or "Rejected"
-      if (selectedStatus === "Accepted") {
-        statusElement.className = 'text-success';
-      } else if (selectedStatus === "Rejected") {
-        statusElement.className = 'text-danger';
-      } else {
-        statusElement.className = 'text-primary';
+  document.addEventListener('DOMContentLoaded', function () {
+    const dropdown = document.getElementById('status-dropdown');
+    const interviewSection = document.getElementById('interview-date-section');
+    const feedbackSection = document.getElementById('feedback-section');
+    const form = dropdown.closest('form');
+    const scoreInput = document.getElementById('score');
+    const feedbackInput = document.getElementById('feedback');
+
+    function toggleSections() {
+      const value = dropdown.value;
+
+      // Show/hide conditional sections
+      interviewSection.style.display = (value === 'Interview') ? 'block' : 'none';
+      feedbackSection.style.display = (value === 'Accepted' || value === 'Rejected') ? 'block' : 'none';
+    }
+    function clearUnusedFields() {
+      const status = dropdown.value;
+
+      if (status !== 'Interview') {
+        document.getElementById('interview-date').value = '';
       }
-    
-      // Enable calendar only if Interview
-      if (selectedStatus === "Interview") {
-        calendarCard.style.opacity = "1";
-        interviewDateInput.disabled = false;
-      } else {
-        calendarCard.style.opacity = "0.5";
-        interviewDateInput.disabled = true;
+      if (status !== 'Accepted' && status !== 'Rejected') {
+        scoreInput.value = '';
+        feedbackInput.value = '';
       }
-    });
-    </script>
+    }
+
+    dropdown.addEventListener('change', toggleSections);
+    toggleSections();
+    clearUnusedFields();
+
+    // Final validation
+    form.addEventListener('submit', function (e) {
+  const status = dropdown.value;
+
+  // Validate feedback and score for Accepted/Rejected
+  if (status === 'Accepted' || status === 'Rejected') {
+    const score = scoreInput.value.trim();
+    const feedback = feedbackInput.value.trim();
+
+    if (!score || !feedback) {
+      e.preventDefault();
+      alert('Please fill out both score and feedback before applying status.');
+      return;
+    }
+  }
+
+  // Validate interview date for Interview status
+  if (status === 'Interview') {
+    const interviewDate = document.getElementById('interview-date').value.trim();
+    if (!interviewDate) {
+      e.preventDefault();
+      alert('Please select an interview date before applying Interview status.');
+      return;
+    }
+  }
+});
+
+    toggleSections();
+  });
+</script>
 @endpush
+
+

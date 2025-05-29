@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Models\JobApplication;
 use App\Models\Notification;
-
+use App\Models\AssessmentSubmission;
 class JobPostController extends Controller
 {
     /**
@@ -348,6 +348,56 @@ public function apply(Request $request, $id)
     
         return view('recruiter.jobsindex', compact('jobs'));
     }
+    public function submitAssessment(Request $request, JobPost $job)
+{
+    
+
+
+    $user = Auth::user();
+    $assessment = $job->assessment;
+
+    if (!$assessment) {
+        abort(404, 'Assessment not found for this job.');
+    }
+
+    $request->validate([
+        'submission_text' => 'nullable|string',
+        'submission_file' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
+    ]);
+
+    // Check for duplicate submission
+    $existing = AssessmentSubmission::where('job_post_id', $job->id)
+        ->where('user_id', $user->id)
+        ->first();
+
+    if ($existing) {
+        return back()->with('error', 'You have already submitted this assessment.');
+    }
+
+    $submission = new AssessmentSubmission();
+    $submission->job_post_id = $job->id;
+    $submission->user_id = $user->id;
+    $submission->submission_text = $request->input('submission_text');
+
+    if ($request->hasFile('assessment_file')) {
+    $submission->submission_file = $request->file('assessment_file')->store('assessment_submissions', 'public');
+}
+
+
+    $submission->started_at = JobApplication::where('job_id', $job->id)
+        ->where('user_id', $user->id)
+        ->value('created_at'); // fallback to application time
+
+    $submission->submitted_at = now();
+    $submission->save();
+
+    // Update application status to "Waiting_for_review"
+    JobApplication::where('job_id', $job->id)
+        ->where('user_id', $user->id)
+        ->update(['status' => 'Waiting_for_review']);
+
+    return redirect()->route('applicantdashboard')->with('success', 'Assessment submitted successfully!');
+}
     
     
 }

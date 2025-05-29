@@ -131,10 +131,37 @@
                 <ul class="menu-inner py-1">
                     <!-- Dashboard -->
                     <li class="menu-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                        <a href="{{ route('recruiter.dashboard') }}" class="menu-link">
+                        <a href="{{ route('admin.dashboard') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div data-i18n="Analytics">Dashboard</div>
                         </a>
+                    </li>
+                     <li class="menu-item {{ request()->routeIs('articles.create') || request()->routeIs('admin.articles.adminPublished') || request()->routeIs('admin.articles.verify')|| request()->routeIs('admin.articles.articlelist')? 'active open' : '' }}">
+                      <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-layout"></i>
+                        <div data-i18n="Layouts">Articles</div>
+                      </a>
+                      <ul class="menu-sub">
+                        <li class="menu-item {{ request()->routeIs('articles.create') ? 'active' : '' }}">
+                          <a href="{{ route('articles.create') }}" class="menu-link">
+                            <div data-i18n="Create New Job Post">Create New articles</div>
+                          </a>
+                        </li>
+                        <li class="menu-item {{ request()->routeIs('admin.articles.adminPublished') ? 'active' : '' }}">
+                          <a href="{{ route('admin.articles.adminPublished') }}" class="menu-link">
+                            <div data-i18n="Without navbar">Admin Published Articles</div>
+                          </a>
+                        </li>
+                        <li class="menu-item {{ request()->routeIs('admin.articles.verify') ? 'active' : '' }}">
+                          <a href="{{ route('admin.articles.verify') }}" class="menu-link">
+                            <div data-i18n="Without navbar">Pending Article Verification</div>
+                          </a>
+                        </li><li class="menu-item {{ request()->routeIs('admin.articles.articlelist') ? 'active' : '' }}">
+                          <a href="{{ route('admin.articles.articlelist') }}" class="menu-link">
+                            <div data-i18n="Without navbar">Verified Articles</div>
+                          </a>
+                        </li>
+                      </ul>
                     </li>
                 </ul>
             </aside>

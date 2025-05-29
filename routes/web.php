@@ -12,6 +12,7 @@ use App\Http\Controllers\RecruiterDashboardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\UserProfileEditController;
+use App\Http\Controllers\JobPostAssessmentController;
 use App\Models\Notification;
 use App\Models\UserProfile;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,9 @@ Route::get('/ajax/jobs', [LandingController::class, 'jobListPartial'])->name('aj
 Route::get('/jobs/{id}/related', [JobPostController::class, 'relatedJobs'])->name('jobs.related');
 
 Route::post('/jobs/{id}/apply', [JobPostController::class, 'apply'])->middleware('auth')->name('jobs.apply');
+Route::get('/assessments/{job}/{application}', [JobPostAssessmentController::class, 'show'])->name('assessments.take');
+Route::post('/jobs/{job}/assessment/submit', [JobPostController::class, 'submitAssessment'])
+        ->name('assessment.submit');
 
 
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -67,6 +71,8 @@ Route::middleware(['auth'])->prefix('profile/edit')->group(function () {
 
 });
 
+Route::view('/assessment-preview', 'assessment-static');
+Route::view('/assessment-file', 'assessment-file');
 
 
 

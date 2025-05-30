@@ -10,6 +10,7 @@ use App\Models\UserProfile;
 use App\Models\Skill;
 use App\Models\Education;
 
+
 class User extends Authenticatable
 {
     

@@ -10,6 +10,7 @@ use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RecruiterDashboardController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ArticleController;
 use App\Models\Notification;
 use Illuminate\Support\Facades\Route;
 
@@ -81,7 +82,6 @@ Route::middleware(['auth', 'verified.recruiter'])->group(function () {
 });
     
 
-
 Route::middleware(['auth', 'verified.recruiter'])->group(function () {
     // Route::get('/', [JobPostController::class, 'index'])->name('jobs.index');
     Route::get('/create', [JobPostController::class, 'create'])->name('jobs.create');
@@ -116,6 +116,23 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 Route::get('/jobs/{id}/{slug?}', [JobPostController::class, 'show'])->name('jobs.show');
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/articles/{id}/toggle-favorite', [ArticleController::class, 'toggleFavorite'])->name('articles.toggleFavorite');
+    Route::get('/articles/favorites', [ArticleController::class, 'favoriteList'])->name('articles.favorites');
+    Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
+});
+
+Route::resource('articles', ArticleController::class);
+Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
+Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
+
+Route::post('/articles/{id}/comment', [ArticleController::class, 'storeComment'])->name('article.comment');
+
+Route::get('/admin/articles/verification', [ArticleController::class, 'verifyArticles'])->name('admin.articles.verify');
+Route::get('/admin/articles/articlelist', [ArticleController::class, 'listArticles'])->name('admin.articles.articlelist');
+Route::patch('/admin/articles/{id}/approve', [ArticleController::class, 'approveArticle'])->name('admin.articles.approve');
+Route::get('/admin/articles/admin-published', [ArticleController::class, 'adminPublishedArticles'])->name('admin.articles.adminPublished');
 
 
 

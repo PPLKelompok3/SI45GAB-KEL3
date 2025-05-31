@@ -12,6 +12,7 @@ use App\Models\Notification;
 use App\Models\CompanyReview;
 use App\Models\AssessmentSubmission;
 use Illuminate\Support\Carbon;
+use App\Models\ReferralCode;
 class JobPostController extends Controller
 {
     /**
@@ -101,7 +102,11 @@ if ($request->filled('assessment_type')) {
 public function edit(JobPost $job)
 {
     $assessment = $job->assessment; 
-    return view('jobsmanagement.edit', compact('job', 'assessment'));
+    $referralCodes = \App\Models\ReferralCode::with('usedBy')
+    ->where('job_id', $job->id)
+    ->latest()
+    ->get();
+    return view('jobsmanagement.edit', compact('job', 'assessment', 'referralCodes'));
 }
 
 
@@ -202,7 +207,7 @@ public function show($id, $slug = null)
 
     $companyReviews = CompanyReview::with('user.profile')
         ->where('company_id', $job->company_id)
-        ->latest()
+        ->orderByDesc('is_useful')
         ->get();
 
     $canReview = false;
@@ -432,6 +437,36 @@ public function storeFeedback(Request $request, $submissionId)
 
     return redirect()->back()->with('success', 'Assessment feedback submitted.');
 }
+public function generateReferralCode(Request $request, $jobId)
+{
+    // Find the job post or throw 404 if not found
+    $job = \App\Models\JobPost::findOrFail($jobId);
+
+    $codes = [];
+
+    // Set the number of codes to generate (you can change this number)
+    $quantity = 1;
+
+    for ($i = 0; $i < $quantity; $i++) {
+        // Generate a random uppercase 8-character string
+        $code = strtoupper(Str::random(8));
+
+        // Save the new referral code in the database
+        $referral = ReferralCode::create([
+            'job_id' => $job->id,
+            'code' => $code,
+            'used' => false,
+        ]);
+
+        // Add the generated code to the array to return back
+        $codes[] = $referral->code;
+    }
+
+    // Redirect back with a success message and the generated codes
+    return back()->with('success', 'Referral code(s) generated successfully.')
+                 ->with('generated_codes', $codes);
+}
+
     
     
 }

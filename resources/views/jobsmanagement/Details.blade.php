@@ -22,45 +22,45 @@
     </section>
 
 
-    <section class="site-section">
-        <div class="container">
-            @if ($isApplied)
-                <div class="alert alert-info mt-3">
-                    ✅ You have already applied for this job.
-                </div>
-            @endif
-            @if ($errors->has('comment'))
-                <div class="alert alert-danger">
-                    {{ $errors->first('comment') }}
-                </div>
-            @endif
+<section class="site-section">
+  <div class="container">
+    @if ($isApplied)
+    <div class="alert alert-info mt-3">
+      ✅ You have already applied for this job.
+    </div>
+    @endif
+    @if ($errors->has('comment'))
+    <div class="alert alert-danger">
+      {{ $errors->first('comment') }}
+    </div>
+    @endif
 
-            <div class="row align-items-center mb-5">
-                <div class="col-lg-8 mb-4 mb-lg-0">
-                    <div class="d-flex align-items-center">
-                        <div class="border p-2 d-inline-block mr-3 rounded">
-                            <img src="{{ asset('storage/' . ($job->company->logo_url ?? 'default_logo.png')) }}"
-                                alt="Company Logo" style="max-height: 80px;">
-                        </div>
-                        <div>
-                            <h2>{{ $job->title }}</h2>
-                            <div>
-                                <span class="ml-0 mr-2 mb-2">
-                                    <span
-                                        class="icon-briefcase mr-2"></span>{{ $job->company->company_name ?? 'Unknown Company' }}
-                                </span>
-                                <span class="m-2">
-                                    <span class="icon-room mr-2"></span>{{ $job->location }}
-                                </span>
-                                <span class="m-2">
-                                    <span class="icon-clock-o mr-2"></span>
-                                    <span
-                                        class="text-primary">{{ ucwords(str_replace('_', ' ', $job->employment_type)) }}</span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <div class="row align-items-center mb-5">
+      <div class="col-lg-8 mb-4 mb-lg-0">
+        <div class="d-flex align-items-center">
+          <div class="border p-2 d-inline-block mr-3 rounded">
+            <img src="{{ asset('storage/' . ($job->company->logo_url ?? 'default_logo.png')) }}"
+              alt="Company Logo" style="max-height: 80px;">
+          </div>
+          <div>
+            <h2>{{ $job->title }}</h2>
+            <div>
+              <span class="ml-0 mr-2 mb-2">
+                <span
+                  class="icon-briefcase mr-2"></span>{{ $job->company->company_name ?? 'Unknown Company' }}
+              </span>
+              <span class="m-2">
+                <span class="icon-room mr-2"></span>{{ $job->location }}
+              </span>
+              <span class="m-2">
+                <span class="icon-clock-o mr-2"></span>
+                <span
+                  class="text-primary">{{ ucwords(str_replace('_', ' ', $job->employment_type)) }}</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
 
                 <div class="col-lg-4">
                     <div class="row">
@@ -208,44 +208,44 @@
                 </div>
             </div>
 
-            @if ($companyReviews->isNotEmpty())
-                <div class="owl-carousel review-carousel">
-                    @foreach ($companyReviews as $review)
-                        <div class="item">
-                            <div class="block__87154 {{ $review->is_useful ? 'bg-light-success' : 'bg-white' }} rounded h-100 mx-2">
-                                <blockquote>
-                                    <p>&ldquo;{{ $review->comment }}&rdquo;</p>
-                                </blockquote>
-                                <div class="block__91147 d-flex align-items-center">
-                                    <figure class="mr-4">
-                                        <img src="{{ $review->user->profile?->profile_picture ? asset('storage/' . $review->user->profile->profile_picture) : asset('assets/img/default-avatar.jpg') }}"
-                                            alt="Avatar" class="img-fluid rounded-circle" width="60">
-                                    </figure>
-                                    @php
-                                        $latestJob = $review->user
-                                            ->applications()
-                                            ->whereHas('job', fn($q) => $q->where('company_id', $review->company_id))
-                                            ->latest('created_at')
-                                            ->first();
-                                    @endphp
-                                    <div>
-                                        <h3>{{ $review->user->name }}</h3>
-                                        @if ($latestJob)
-                                            <span class="position">{{ $latestJob->job->title }}</span>
-                                        @else
-                                            <span class="position">No job info</span>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            @else
-                <p class="text-muted text-center">No reviews for this company yet.</p>
-            @endif
+    @if ($companyReviews->isNotEmpty())
+    <div class="owl-carousel review-carousel">
+      @foreach ($companyReviews as $review)
+      <div class="item">
+        <div class="block__87154 {{ $review->is_useful ? 'bg-light-success' : 'bg-white' }} rounded h-100 mx-2">
+          <blockquote>
+            <p>&ldquo;{{ $review->comment }}&rdquo;</p>
+          </blockquote>
+          <div class="block__91147 d-flex align-items-center">
+            <figure class="mr-4">
+              <img src="{{ $review->user->profile?->profile_picture ? asset('storage/' . $review->user->profile->profile_picture) : asset('assets/img/default-avatar.jpg') }}"
+                alt="Avatar" class="img-fluid rounded-circle" width="60">
+            </figure>
+            @php
+            $latestJob = $review->user
+            ->applications()
+            ->whereHas('job', fn($q) => $q->where('company_id', $review->company_id))
+            ->latest('created_at')
+            ->first();
+            @endphp
+            <div>
+              <h3>{{ $review->user->name }}</h3>
+              @if ($latestJob)
+              <span class="position">{{ $latestJob->job->title }}</span>
+              @else
+              <span class="position">No job info</span>
+              @endif
+            </div>
+          </div>
         </div>
-    </section>
+      </div>
+      @endforeach
+    </div>
+    @else
+    <p class="text-muted text-center">No reviews for this company yet.</p>
+    @endif
+  </div>
+</section>
 
     @auth
         @if ($canReview)

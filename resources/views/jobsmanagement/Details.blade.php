@@ -29,6 +29,12 @@
       ✅ You have already applied for this job.
     </div>
     @endif
+    @if ($errors->has('comment'))
+    <div class="alert alert-danger">
+      {{ $errors->first('comment') }}
+    </div>
+    @endif
+
     <div class="row align-items-center mb-5">
       <div class="col-lg-8 mb-4 mb-lg-0">
         <div class="d-flex align-items-center">
@@ -206,7 +212,7 @@
     <div class="owl-carousel review-carousel">
       @foreach ($companyReviews as $review)
       <div class="item">
-        <div class="block__87154 bg-white rounded h-100 mx-2">
+        <div class="block__87154 {{ $review->is_useful ? 'bg-light-success' : 'bg-white' }} rounded h-100 mx-2">
           <blockquote>
             <p>&ldquo;{{ $review->comment }}&rdquo;</p>
           </blockquote>
@@ -235,7 +241,6 @@
       </div>
       @endforeach
     </div>
-
     @else
     <p class="text-muted text-center">No reviews for this company yet.</p>
     @endif

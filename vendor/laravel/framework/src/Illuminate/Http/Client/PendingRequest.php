@@ -26,6 +26,7 @@ use JsonSerializable;
 use OutOfBoundsException;
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\RequestInterface;
+use RuntimeException;
 use Symfony\Component\VarDumper\VarDumper;
 
 class PendingRequest
@@ -1032,11 +1033,7 @@ class PendingRequest
                     $this->dispatchResponseReceivedEvent($response);
                 });
             })
-            ->otherwise(function (OutOfBoundsException|TransferException|StrayRequestException $e) {
-                if ($e instanceof StrayRequestException) {
-                    throw $e;
-                }
-
+            ->otherwise(function (OutOfBoundsException|TransferException $e) {
                 if ($e instanceof ConnectException || ($e instanceof RequestException && ! $e->hasResponse())) {
                     $exception = new ConnectionException($e->getMessage(), 0, $e);
 
@@ -1337,7 +1334,7 @@ class PendingRequest
 
                 if (is_null($response)) {
                     if ($this->preventStrayRequests) {
-                        throw new StrayRequestException((string) $request->getUri());
+                        throw new RuntimeException('Attempted request to ['.(string) $request->getUri().'] without a matching fake.');
                     }
 
                     return $handler($request, $options);

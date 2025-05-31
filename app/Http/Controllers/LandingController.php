@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Skill;
 use App\Models\JobPost;
+use App\Models\JobApplication;
+use App\Models\User;
 
 class LandingController extends Controller
 {
@@ -56,8 +58,19 @@ class LandingController extends Controller
     if ($request->ajax()) {
         return view('partials.job-list', compact('jobs'))->render();
     }
+    $totalApplicants = User::where('role', 'applicant')->count();
+    $totalJobsPosted = JobPost::where('status', 'Active')->count();
+    $totalApplications = JobApplication::count();
+    $totalCompanies = User::where('role', 'recruiter')->count();
 
-    return view('index', compact('trendingKeywords', 'recommendedSkills', 'jobs', 'totalJobs'));
+
+    return view('index', compact('trendingKeywords', 'recommendedSkills', 'jobs', 'totalJobs','jobs',
+        'trendingKeywords',
+        'recommendedSkills',
+        'totalJobsPosted',
+        'totalApplicants',
+        'totalApplications',
+        'totalCompanies'));
 }
 
 

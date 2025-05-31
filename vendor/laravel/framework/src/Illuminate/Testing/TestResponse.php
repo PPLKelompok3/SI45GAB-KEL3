@@ -132,21 +132,6 @@ class TestResponse implements ArrayAccess
     }
 
     /**
-     * Assert that the response is a client error.
-     *
-     * @return $this
-     */
-    public function assertClientError()
-    {
-        PHPUnit::withResponse($this)->assertTrue(
-            $this->isClientError(),
-            $this->statusMessageWithDetails('>=400, < 500', $this->getStatusCode())
-        );
-
-        return $this;
-    }
-
-    /**
      * Assert that the response is a server error.
      *
      * @return $this
@@ -229,23 +214,6 @@ class TestResponse implements ArrayAccess
     }
 
     /**
-     * Assert whether the response is redirecting back to the previous location.
-     *
-     * @return $this
-     */
-    public function assertRedirectBack()
-    {
-        PHPUnit::withResponse($this)->assertTrue(
-            $this->isRedirect(),
-            $this->statusMessageWithDetails('201, 301, 302, 303, 307, 308', $this->getStatusCode()),
-        );
-
-        $this->assertLocation(app('url')->previous());
-
-        return $this;
-    }
-
-    /**
      * Assert whether the response is redirecting to a given route.
      *
      * @param  \BackedEnum|string  $name
@@ -301,27 +269,6 @@ class TestResponse implements ArrayAccess
                 app('url')->to($uri), $expectedUri
             );
         }
-
-        return $this;
-    }
-
-    /**
-     * Assert whether the response is redirecting to a given controller action.
-     *
-     * @param  string|array  $name
-     * @param  array  $parameters
-     * @return $this
-     */
-    public function assertRedirectToAction($name, $parameters = [])
-    {
-        $uri = action($name, $parameters);
-
-        PHPUnit::withResponse($this)->assertTrue(
-            $this->isRedirect(),
-            $this->statusMessageWithDetails('201, 301, 302, 303, 307, 308', $this->getStatusCode()),
-        );
-
-        $this->assertLocation($uri);
 
         return $this;
     }
@@ -942,7 +889,7 @@ class TestResponse implements ArrayAccess
      * @param  array|null  $responseData
      * @return $this
      */
-    public function assertJsonStructure(?array $structure = null, ?array $responseData = null)
+    public function assertJsonStructure(?array $structure = null, $responseData = null)
     {
         $this->decodeResponseJson()->assertStructure($structure, $responseData);
 
@@ -956,7 +903,7 @@ class TestResponse implements ArrayAccess
      * @param  array|null  $responseData
      * @return $this
      */
-    public function assertExactJsonStructure(?array $structure = null, ?array $responseData = null)
+    public function assertExactJsonStructure(?array $structure = null, $responseData = null)
     {
         $this->decodeResponseJson()->assertStructure($structure, $responseData, true);
 
@@ -1661,28 +1608,19 @@ class TestResponse implements ArrayAccess
      * Assert that the session does not have a given key.
      *
      * @param  string|array  $key
-     * @param  mixed  $value
      * @return $this
      */
-    public function assertSessionMissing($key, $value = null)
+    public function assertSessionMissing($key)
     {
         if (is_array($key)) {
             foreach ($key as $value) {
                 $this->assertSessionMissing($value);
             }
-
-            return $this;
-        }
-
-        if (is_null($value)) {
+        } else {
             PHPUnit::withResponse($this)->assertFalse(
                 $this->session()->has($key),
                 "Session has unexpected key [{$key}]."
             );
-        } elseif ($value instanceof Closure) {
-            PHPUnit::withResponse($this)->assertTrue($value($this->session()->get($key)));
-        } else {
-            PHPUnit::withResponse($this)->assertEquals($value, $this->session()->get($key));
         }
 
         return $this;

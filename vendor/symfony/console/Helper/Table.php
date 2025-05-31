@@ -417,7 +417,7 @@ class Table
                     continue;
                 }
 
-                if ($isHeader && !$isHeaderSeparatorRendered && $this->style->displayOutsideBorder()) {
+                if ($isHeader && !$isHeaderSeparatorRendered) {
                     $this->renderRowSeparator(
                         self::SEPARATOR_TOP,
                         $hasTitle ? $this->headerTitle : null,
@@ -449,10 +449,7 @@ class Table
                 }
             }
         }
-
-        if ($this->getStyle()->displayOutsideBorder()) {
-            $this->renderRowSeparator(self::SEPARATOR_BOTTOM, $this->footerTitle, $this->style->getFooterTitleFormat());
-        }
+        $this->renderRowSeparator(self::SEPARATOR_BOTTOM, $this->footerTitle, $this->style->getFooterTitleFormat());
 
         $this->cleanup();
         $this->rendered = true;
@@ -871,12 +868,6 @@ class Table
      */
     private static function initStyles(): array
     {
-        $markdown = new TableStyle();
-        $markdown
-            ->setDefaultCrossingChar('|')
-            ->setDisplayOutsideBorder(false)
-        ;
-
         $borderless = new TableStyle();
         $borderless
             ->setHorizontalBorderChars('=')
@@ -914,7 +905,6 @@ class Table
 
         return [
             'default' => new TableStyle(),
-            'markdown' => $markdown,
             'borderless' => $borderless,
             'compact' => $compact,
             'symfony-style-guide' => $styleGuide,

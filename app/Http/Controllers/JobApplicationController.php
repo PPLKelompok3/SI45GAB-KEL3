@@ -14,47 +14,67 @@ class JobApplicationController extends Controller
     public function updateStatus(Request $request, $id)
 {
     $application = JobApplication::with('job.company')->findOrFail($id);
-    // dd($request->all());
 
-    $status = $request->input('status');
-    $validStatuses = ['Pending', 'Processed', 'Interview', 'Accepted', 'Rejected'];
+$status = $request->input('status');
+$validStatuses = ['Pending', 'Processed', 'Interview', 'Accepted', 'Rejected'];
 
-    if (!in_array($status, $validStatuses)) {
-        return back()->withErrors(['status' => 'Invalid status.']);
-    }
-
-    // Validate inputs based on the next status
-    if ($status === 'Interview') {
-        $request->validate(['interview_date' => 'required|date']);
-        $application->interview_date = $request->input('interview_date');
-    $application->score = null;
-    $application->feedback = null;
-    } elseif (in_array($status, ['Accepted', 'Rejected'])) {
-        $request->validate([
-            'score' => 'required|integer|min:1|max:100',
-            'feedback' => 'required|string',
-        ]);
-        $application->score = $request->input('score');
-        $application->feedback = $request->input('feedback');
-    $application->interview_date = null;
-    } elseif ($application->status === 'Waiting_for_review' && $status === 'Interview') {
-        $request->validate(['feedback' => 'required|string']);
-        $application->feedback = $request->input('feedback');
+if (!in_array($status, $validStatuses)) {
+    return back()->withErrors(['status' => 'Invalid status.']);
 }
 
-    // Update status
-    $application->status = $status;
-    $application->save();
+// Case: From Waiting_for_review → Interview
+if ($application->status === 'Waiting_for_review' && $status === 'Interview') {
+    $request->validate([
+        'feedback' => 'required|string',
+        'interview_date' => 'required|date',
+    ]);
+    $application->feedback = $request->input('feedback');
+    $application->interview_date = $request->input('interview_date');
+    $application->score = null;
 
-    // Store feedback in assessment submission (if exists)
-    if ($application->status !== 'Under_assessment') {
-        \App\Models\AssessmentSubmission::where('job_post_id', $application->job_id)
-            ->where('user_id', $application->user_id)
-            ->update([
-                'review_note' => $request->input('feedback'),
-                'reviewed_at' => now(),
-            ]);
-    }
+// Case: From Waiting_for_review → Rejected
+} elseif ($application->status === 'Waiting_for_review' && $status === 'Rejected') {
+    $request->validate([
+        'feedback' => 'required|string',
+    ]);
+    $application->feedback = $request->input('feedback');
+    $application->interview_date = null;
+    $application->score = null;
+
+// Case: To Interview (normal flow)
+} elseif ($status === 'Interview') {
+    $request->validate([
+        'interview_date' => 'required|date',
+    ]);
+    $application->interview_date = $request->input('interview_date');
+    $application->feedback = null;
+    $application->score = null;
+
+// Case: To Accepted or Rejected (after Interview)
+} elseif (in_array($status, ['Accepted', 'Rejected'])) {
+    $request->validate([
+        'score' => 'required|integer|min:1|max:100',
+        'feedback' => 'required|string',
+    ]);
+    $application->score = $request->input('score');
+    $application->feedback = $request->input('feedback');
+    $application->interview_date = $application->interview_date ?? null;
+}
+
+// Update status
+$application->status = $status;
+$application->save();
+
+// Store feedback in assessment submission if exists
+if ($application->status !== 'Under_assessment') {
+    \App\Models\AssessmentSubmission::where('job_post_id', $application->job_id)
+        ->where('user_id', $application->user_id)
+        ->update([
+            'review_note' => $application->feedback,
+            'reviewed_at' => now(),
+        ]);
+}
+
 
     // Notify applicant
     Notification::create([

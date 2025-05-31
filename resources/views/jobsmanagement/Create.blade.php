@@ -9,7 +9,7 @@
   </div>
   <div class="card-body">
     <form method="POST" action="{{ route('jobs.store') }}" enctype="multipart/form-data">
-      @csrf
+            @csrf
 
       <div class="mb-3">
         <label class="form-label">Job Title</label>
@@ -105,8 +105,7 @@
     <div class="mb-3">
   <label class="form-label">Assessment Deadline</label>
   <input type="number" name="assessment_due_in_days" class="form-control" min="1"
-         placeholder="e.g. 3 (means 3 days after applicant applies)"
-         value="{{ old('assessment_due_in_days', $assessment?->due_in_days) }}">
+         placeholder="e.g. 3 (means 3 days after applicant applies)">
 </div>
 
   </div>

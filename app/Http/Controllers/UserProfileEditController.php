@@ -218,6 +218,7 @@ public function updateAchievements(Request $request)
     ]);
 
     $user = Auth::user();
+    /** @var \App\Models\User $user */
     $user->achievements()->delete(); // Replace old entries
 
     foreach ($request->input('achievements', []) as $index => $entry) {

@@ -62,14 +62,14 @@ class Factory
     /**
      * The recorded response array.
      *
-     * @var list<array{0: \Illuminate\Http\Client\Request, 1: \Illuminate\Http\Client\Response|null}>
+     * @var array
      */
     protected $recorded = [];
 
     /**
      * All created response sequences.
      *
-     * @var list<\Illuminate\Http\Client\ResponseSequence>
+     * @var array
      */
     protected $responseSequences = [];
 
@@ -195,7 +195,7 @@ class Factory
      * Create a new connection exception for use during stubbing.
      *
      * @param  string|null  $message
-     * @return \Closure(\Illuminate\Http\Client\Request): \GuzzleHttp\Promise\PromiseInterface
+     * @return \GuzzleHttp\Promise\PromiseInterface
      */
     public static function failedConnection($message = null)
     {
@@ -221,7 +221,7 @@ class Factory
     /**
      * Register a stub callable that will intercept requests and be able to return stub responses.
      *
-     * @param  callable|array<string, mixed>|null  $callback
+     * @param  callable|array|null  $callback
      * @return $this
      */
     public function fake($callback = null)
@@ -283,7 +283,7 @@ class Factory
      * Stub the given URL using the given callback.
      *
      * @param  string  $url
-     * @param  \Illuminate\Http\Client\Response|\GuzzleHttp\Promise\PromiseInterface|callable|int|string|array|\Illuminate\Http\Client\ResponseSequence  $callback
+     * @param  \Illuminate\Http\Client\Response|\GuzzleHttp\Promise\PromiseInterface|callable|int|string|array  $callback
      * @return $this
      */
     public function stubUrl($url, $callback)
@@ -371,7 +371,7 @@ class Factory
     /**
      * Assert that a request / response pair was recorded matching a given truth test.
      *
-     * @param  callable|(\Closure(\Illuminate\Http\Client\Request, \Illuminate\Http\Client\Response|null): bool)  $callback
+     * @param  callable  $callback
      * @return void
      */
     public function assertSent($callback)
@@ -385,7 +385,7 @@ class Factory
     /**
      * Assert that the given request was sent in the given order.
      *
-     * @param  list<string|(\Closure(\Illuminate\Http\Client\Request, \Illuminate\Http\Client\Response|null): bool)|callable>  $callbacks
+     * @param  array  $callbacks
      * @return void
      */
     public function assertSentInOrder($callbacks)
@@ -407,7 +407,7 @@ class Factory
     /**
      * Assert that a request / response pair was not recorded matching a given truth test.
      *
-     * @param  callable|(\Closure(\Illuminate\Http\Client\Request, \Illuminate\Http\Client\Response|null): bool)  $callback
+     * @param  callable  $callback
      * @return void
      */
     public function assertNotSent($callback)
@@ -460,8 +460,8 @@ class Factory
     /**
      * Get a collection of the request / response pairs matching the given truth test.
      *
-     * @param  (\Closure(\Illuminate\Http\Client\Request, \Illuminate\Http\Client\Response|null): bool)|callable  $callback
-     * @return \Illuminate\Support\Collection<int, array{0: \Illuminate\Http\Client\Request, 1: \Illuminate\Http\Client\Response|null}>
+     * @param  callable  $callback
+     * @return \Illuminate\Support\Collection
      */
     public function recorded($callback = null)
     {

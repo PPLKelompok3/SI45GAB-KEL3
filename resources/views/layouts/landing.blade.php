@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <title>@yield('title', 'Workora — Find Your Dream Job')</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,28 +15,62 @@
     <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.min.css" />
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.min.css" />
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
 
 
+    @stack('styles')
     <style>
-      .selected-skill {
-        background-color: #ffa500 !important; /* darker orange */
-        color: white !important;
-      }
-      .article-thumbnail {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: 8px;
-}
-    </style>
     
+body.profile-page-bs5-active header.site-navbar nav.site-navigation.mx-auto {
+    display: block !important;
+    width: -moz-fit-content !important;
+    width: fit-content !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    float: none !important;
+}
+
+body.profile-page-bs5-active header.site-navbar .site-logo.col-6,
+body.profile-page-bs5-active header.site-navbar .right-cta-menu.col-6 {
+    flex-shrink: 0 !important;
+}
+
+/* You might also need to ensure the row itself is explicitly flex if BS5 alters it somehow,
+   but only on the profile page context */
+body.profile-page-bs5-active header.site-navbar .container-fluid > .row {
+    display: flex !important;
+    align-items: center !important;
+}
+        .selected-skill {
+            background-color: #ffa500 !important;
+            /* darker orange */
+            color: white !important;
+        }
+
+        .article-thumbnail {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .bg-light-success {
+            background-color: #e6f4ea;
+        }
+
+    </style>
+
 
     @stack('head')
-  </head>
+</head>
 
-  <body id="top">
+<body id="top" class="@stack('body_classes')">
     {{-- <div id="overlayer"></div>
     <div class="loader">
       <div class="spinner-border text-primary" role="status">
@@ -44,88 +79,112 @@
     </div> --}}
 
     <div class="site-wrap">
-      {{-- Mobile Navigation --}}
-      <div class="site-mobile-menu site-navbar-target">
-        <div class="site-mobile-menu-header">
-          <div class="site-mobile-menu-close mt-3">
-            <span class="icon-close2 js-menu-toggle"></span>
-          </div>
-        </div>
-        <div class="site-mobile-menu-body"></div>
-      </div>
-
-      {{-- Navbar --}}
-      <header class="site-navbar mt-3">
-        <div class="container-fluid">
-          <div class="row align-items-center">
-            <div class="site-logo col-6">
-              <a href="{{ url('/') }}">
-                <img src="{{ asset('assets/img/icons/logo/workora.svg') }}" alt="Workora Logo" height="120">
-              </a>
+        {{-- Mobile Navigation --}}
+        <div class="site-mobile-menu site-navbar-target">
+            <div class="site-mobile-menu-header">
+                <div class="site-mobile-menu-close mt-3">
+                    <span class="icon-close2 js-menu-toggle"></span>
+                </div>
             </div>
-
-            <nav class="mx-auto site-navigation">
-              <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
-              <li>
-  <a href="{{ url('/') }}" class="nav-link {{ request()->is('/') ? 'active' : '' }}">Home</a>
-</li>
-<li>
-  <a href="{{ route('articles.index') }}" class="nav-link {{ request()->is('articles*') ? 'active' : '' }}">Articles</a>
-</li>
-
-
-                <li>
-  <a href="{{ route('profile.show') }}" class="nav-link {{ request()->is('profilepage*') ? 'active' : '' }}">Profile</a>
-</li>
-              </ul>
-            </nav>
-
-            <div class="right-cta-menu text-right d-flex align-items-center col-6">
-              <div class="ml-auto">
-            
-            
-                @auth
-                  @if(auth()->user()->role === 'recruiter')
-                    <a href="{{ route('jobs.create') }}" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block">
-                      <span class="mr-2 icon-add"></span>Post a Job
-                    </a>
-                  @endif
-                @endauth
-            
-
-                @auth
-                  @if(auth()->user()->role === 'applicant')
-    <a href="/applicantdashboard" class="btn btn-outline-primary">Dashboard</a>
-@elseif(auth()->user()->role === 'recruiter')
-    <a href="{{ route('recruiter.dashboard') }}" class="btn btn-outline-primary">Dashboard</a>
-@elseif(auth()->user()->role === 'admin')
-    <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-primary">Admin Dashboard</a>
-@endif
-
-            
-                  <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-                    @csrf
-                    <button type="submit" class="btn btn-danger ms-2">Logout</button>
-                  </form>
-                @else
-                  <a dusk="login-button" href="{{ route('login') }}" class="btn btn-primary ms-2">Login</a>
-                @endauth
-            
-              </div>
-            
-              <a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3">
-                <span class="icon-menu h3 m-0 p-0 mt-2"></span>
-              </a>
-            </div>
-            
-          </div>
+            <div class="site-mobile-menu-body"></div>
         </div>
-      </header>
 
-      {{-- Main Content --}}
-      @yield('content')
+        {{-- Navbar --}}
+        <header class="site-navbar mt-3">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="site-logo col-6">
+                        <a href="{{ url('/') }}">
+                            <img src="{{ asset('assets/img/icons/logo/workora.svg') }}" alt="Workora Logo"
+                                height="120">
+                        </a>
+                    </div>
 
-      {{-- Footer or scroll to top etc. --}}
+                    <nav class="mx-auto site-navigation">
+                        <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
+                            <li>
+                                <a href="{{ url('/') }}"
+                                    class="nav-link {{ request()->is('/') ? 'active' : '' }}">Home</a>
+                            </li>
+                            <li class="has-children {{ request()->is('articles*') ? 'active' : '' }}">
+                                <a href="#">Articles</a>
+                                <ul class="dropdown">
+                                    <li><a href="{{ route('articles.index') }}">All Articles</a></li>
+                                    <li><a href="{{ route('articles.favorites') }}">Favorites</a></li>
+                                </ul>
+                            </li>
+
+
+
+                            @auth
+                                @if (auth()->user()->role === 'applicant')
+                                    <li>
+                                        <a href="{{ route('profile.show') }}"
+                                            class="nav-link {{ request()->is('profilepage*') ? 'active' : '' }}">
+                                            Profile
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('referral.form') }}"
+                                            class="nav-link {{ request()->is('referral') ? 'active' : '' }}">
+                                            Apply via Referral
+                                        </a>
+                                    </li>
+                                @endif
+                            @endauth
+
+                        </ul>
+                    </nav>
+
+                    <div class="right-cta-menu text-right d-flex align-items-center col-6">
+                        <div class="ml-auto">
+
+
+                            @auth
+                                @if (auth()->user()->role === 'recruiter')
+                                    <a href="{{ route('jobs.create') }}"
+                                        class="btn btn-outline-white border-width-2 d-none d-lg-inline-block">
+                                        <span class="mr-2 icon-add"></span>Post a Job
+                                    </a>
+                                @endif
+                            @endauth
+
+
+                            @auth
+                                @if (auth()->user()->role === 'applicant')
+                                    <a href="/applicantdashboard" class="btn btn-outline-primary">Dashboard</a>
+                                @elseif(auth()->user()->role === 'recruiter')
+                                    <a href="{{ route('recruiter.dashboard') }}"
+                                        class="btn btn-outline-primary">Dashboard</a>
+                                @elseif(auth()->user()->role === 'admin')
+                                    <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-primary">Admin
+                                        Dashboard</a>
+                                @endif
+
+
+                                <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger ms-2">Logout</button>
+                                </form>
+                            @else
+                                <a dusk="login-button" href="{{ route('login') }}" class="btn btn-primary ms-2">Login</a>
+                            @endauth
+
+                        </div>
+
+                        <a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3">
+                            <span class="icon-menu h3 m-0 p-0 mt-2"></span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+
+        {{-- Main Content --}}
+        @yield('content')
+
+        {{-- Footer or scroll to top etc. --}}
     </div>
 
     {{-- Scripts --}}
@@ -141,5 +200,6 @@
     <script src="{{ asset('assets/js/bootstrap-select.min.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
     @stack('scripts')
-  </body>
+</body>
+
 </html>

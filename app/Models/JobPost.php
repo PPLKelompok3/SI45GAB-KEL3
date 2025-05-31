@@ -34,5 +34,9 @@ class JobPost extends Model
             ->limit(3)
     ]);
 }
+public function assessment()
+{
+    return $this->hasOne(JobPostAssessment::class);
+}
 
 }

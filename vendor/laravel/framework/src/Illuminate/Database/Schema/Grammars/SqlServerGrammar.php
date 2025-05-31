@@ -769,10 +769,6 @@ class SqlServerGrammar extends Grammar
      */
     protected function typeDate(Fluent $column)
     {
-        if ($column->useCurrent) {
-            $column->default(new Expression('CAST(GETDATE() AS DATE)'));
-        }
-
         return 'date';
     }
 
@@ -860,10 +856,6 @@ class SqlServerGrammar extends Grammar
      */
     protected function typeYear(Fluent $column)
     {
-        if ($column->useCurrent) {
-            $column->default(new Expression('CAST(YEAR(GETDATE()) AS INTEGER)'));
-        }
-
         return $this->typeInteger($column);
     }
 

@@ -376,7 +376,7 @@ public function apply(Request $request, $id)
 
     $request->validate([
         'submission_text' => 'nullable|string',
-        'submission_file' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
+        'submission_file' => 'nullable|file|mimes:pdf,doc,docx',
     ]);
 
     // Check for duplicate submission

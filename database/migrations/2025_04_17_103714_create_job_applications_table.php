@@ -13,7 +13,6 @@ return new class extends Migration
 {
     Schema::create('job_applications', function (Blueprint $table) {
         $table->id();
-        $table->unsignedBigInteger('job_id');
         $table->foreign('job_id')->references('id')->on('job_posts')->onDelete('cascade');
         $table->foreignId('user_id')->constrained()->onDelete('cascade');
         $table->enum('status', ['Pending', 'Processed', 'Interview', 'Accepted', 'Rejected'])->default('Pending');

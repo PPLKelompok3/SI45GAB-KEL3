@@ -261,8 +261,8 @@
                                             <span class="align-middle">My Profile</span>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">
+                                   <li>
+                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">
                                             <i class="bx bx-cog me-2"></i>
                                             <span class="align-middle">Settings</span>
                                         </a>

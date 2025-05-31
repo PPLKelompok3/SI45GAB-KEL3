@@ -121,14 +121,13 @@ class MorphToMany extends BelongsToMany
     }
 
     /**
-     * Get the pivot models that are currently attached, filtered by related model keys.
+     * Get the pivot models that are currently attached.
      *
-     * @param  mixed  $ids
      * @return \Illuminate\Support\Collection<int, TPivotModel>
      */
-    protected function getCurrentlyAttachedPivotsForIds($ids = null)
+    protected function getCurrentlyAttachedPivots()
     {
-        return parent::getCurrentlyAttachedPivotsForIds($ids)->map(function ($record) {
+        return parent::getCurrentlyAttachedPivots()->map(function ($record) {
             return $record instanceof MorphPivot
                 ? $record->setMorphType($this->morphType)
                     ->setMorphClass($this->morphClass)

@@ -60,6 +60,7 @@ class ProfileController extends Controller
      public function show()
     {
         $user = Auth::user();
+        /** @var \App\Models\User $user */
         $profile = $user->profile;
         $experiences = $user->experiences;
         $skills = $user->skills;

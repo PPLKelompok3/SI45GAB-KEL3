@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class JobApplication extends Model
 {
     use HasFactory;
-    protected $fillable = ['job_id', 'user_id', 'status', 'cover_letter','interview_date','score','feedback'];
+    protected $fillable = ['job_id', 'user_id', 'status', 'cover_letter','interview_date','score','feedback', 'applied_via_referral'];
 
     public function jobPost()
     {
@@ -29,4 +29,5 @@ class JobApplication extends Model
 {
     return $this->belongsTo(JobPost::class, 'job_id');
 }
+
 }

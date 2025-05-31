@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Models\JobApplication;
 use App\Models\Notification;
+use App\Models\CompanyReview;
 use App\Models\AssessmentSubmission;
+use Illuminate\Support\Carbon;
 class JobPostController extends Controller
 {
     /**
@@ -89,7 +91,7 @@ if ($request->filled('assessment_type')) {
 
     \App\Models\JobPostAssessment::create($assessmentData);
 }
-    
+
 
     return redirect()->route('jobs.index')->with('success', 'Job posted!');
 }
@@ -196,18 +198,25 @@ public function toggleStatus(JobPost $job)
 public function show($id, $slug = null)
 {
     $job = JobPost::with('company')->findOrFail($id);
+    $isApplied = Auth::check() && JobApplication::where('job_id', $id)->where('user_id', Auth::id())->exists();
 
-    $isApplied = false;
+    $companyReviews = CompanyReview::with('user.profile')
+        ->where('company_id', $job->company_id)
+        ->latest()
+        ->get();
 
-    if (Auth::check() && Auth::user()->role === 'applicant') {
-        /** @var \App\Models\User $user */
-        $user = Auth::user(); // ➔ Help the editor know this is a User
-        $isApplied = $user->applications()
-            ->where('job_id', $job->id)
+    $canReview = false;
+    if (Auth::check()) {
+        $canReview = JobApplication::where('user_id', Auth::id())
+            ->where('status', 'Accepted')
+            ->whereHas('job', function ($q) use ($job) {
+                $q->where('company_id', $job->company_id);
+            })
             ->exists();
     }
+    
 
-    return view('jobsmanagement.Details', compact('job', 'isApplied'));
+    return view('jobsmanagement.Details', compact('job', 'isApplied', 'companyReviews', 'canReview'));
 }
 
 
@@ -397,6 +406,31 @@ public function apply(Request $request, $id)
         ->update(['status' => 'Waiting_for_review']);
 
     return redirect()->route('applicantdashboard')->with('success', 'Assessment submitted successfully!');
+}
+public function storeFeedback(Request $request, $submissionId)
+{
+    $request->validate([
+        'review_note' => 'required|string|min:5',
+    ]);
+
+    $submission = AssessmentSubmission::findOrFail($submissionId);
+
+    // Update the review note and timestamp
+    $submission->review_note = $request->input('review_note');
+    $submission->reviewed_at = Carbon::now();
+    $submission->save();
+
+    // ✅ Optionally, update application status to Processed or similar
+    $application = JobApplication::where('job_id', $submission->job_post_id)
+        ->where('user_id', $submission->user_id)
+        ->first();
+
+    if ($application && $application->status === 'Waiting_for_review') {
+        $application->status = 'Processed';
+        $application->save();
+    }
+
+    return redirect()->back()->with('success', 'Assessment feedback submitted.');
 }
     
     

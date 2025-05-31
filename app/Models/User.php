@@ -110,6 +110,12 @@ public function companyReviews()
 
 
 
+// In User.php
+public function favoriteArticles()
+{
+    return $this->belongsToMany(\App\Models\Article::class, 'favorite_articles')->withTimestamps();
+}
+
 
 
 

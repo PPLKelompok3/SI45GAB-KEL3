@@ -10,6 +10,7 @@ use App\Models\ArticleComment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
+
 class ArticleController extends Controller
 {
     public function store(Request $request)
@@ -208,6 +209,84 @@ public function favoriteList()
 
     return view('articles.favorites', compact('favoriteArticles'));
 }
+public function destroy($id)
+{
+    $article = \App\Models\Article::findOrFail($id);
+
+    // Optional: Authorization check for admin
+    if (auth::user()->role !== 'admin') {
+        abort(403, 'Unauthorized action.');
+    }
+
+    
+
+    $article->delete();
+
+    return redirect()->back()->with('success', 'Article deleted successfully.');
+}
+public function edit($id)
+{
+    $article = Article::with('skills')->findOrFail($id);
+
+    // Optional: only allow edit if admin or owner
+    if (auth::user()->role !== 'admin' && auth::id() !== $article->user_id) {
+        abort(403, 'Unauthorized');
+    }
+
+    $skillSuggestions = Skill::pluck('name');
+    $existingSkills = $article->skills->pluck('name')->map(fn($name) => ['value' => $name])->toJson();
+
+    return view('articles.edit', compact('article', 'skillSuggestions', 'existingSkills'));
+}
+public function update(Request $request, $id)
+{
+    $article = Article::findOrFail($id);
+
+    if (auth::user()->role !== 'admin' && auth::id() !== $article->user_id) {
+        abort(403, 'Unauthorized');
+    }
+
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'content' => 'required|string',
+        'thumbnail' => 'nullable|image|mimes:jpg,jpeg,png,webp',
+        'header_image' => 'nullable|image|mimes:jpg,jpeg,png,webp',
+        'skills' => 'nullable|string'
+    ]);
+
+    $article->title = $request->title;
+    $article->content = $request->content;
+
+    if ($request->hasFile('thumbnail')) {
+        if ($article->thumbnail) Storage::disk('public')->delete($article->thumbnail);
+        $article->thumbnail = $request->file('thumbnail')->store('articles/thumbnails', 'public');
+    }
+
+    if ($request->hasFile('header_image')) {
+        if ($article->header_image) Storage::disk('public')->delete($article->header_image);
+        $article->header_image = $request->file('header_image')->store('articles/headers', 'public');
+    }
+
+    $article->save();
+
+    if ($request->filled('skills')) {
+        $skillNames = json_decode($request->skills, true);
+        $skillIds = [];
+
+        foreach ($skillNames as $item) {
+            $skillName = is_array($item) ? $item['value'] : $item;
+            $skill = Skill::firstOrCreate(['name' => $skillName]);
+            $skillIds[] = $skill->id;
+        }
+
+        $article->skills()->sync($skillIds);
+    }
+
+    return redirect()->route('articles.index')->with('success', 'Article updated successfully.');
+}
+
+
+
 
 
 

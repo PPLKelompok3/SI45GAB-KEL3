@@ -77,6 +77,10 @@ Route::middleware(['auth', 'applicant'])->group(function () {
 Route::resource('articles', ArticleController::class);
 Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
 Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
+Route::delete('/admin/articles/{id}', [ArticleController::class, 'destroy'])->name('admin.articles.destroy');
+Route::get('/articles/{id}/edit', [ArticleController::class, 'edit'])->name('articles.edit');
+Route::put('/articles/{id}', [ArticleController::class, 'update'])->name('articles.update');
+
 
 
 

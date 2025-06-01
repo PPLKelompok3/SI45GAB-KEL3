@@ -152,13 +152,13 @@
                             <div data-i18n="Without navbar">Admin Published Articles</div>
                           </a>
                         </li>
-                        <li class="menu-item {{ request()->routeIs('admin.articles.verify') ? 'active' : '' }}">
+                        <!-- <li class="menu-item {{ request()->routeIs('admin.articles.verify') ? 'active' : '' }}">
                           <a href="{{ route('admin.articles.verify') }}" class="menu-link">
                             <div data-i18n="Without navbar">Pending Article Verification</div>
                           </a>
                         </li><li class="menu-item {{ request()->routeIs('admin.articles.articlelist') ? 'active' : '' }}">
                           <a href="{{ route('admin.articles.articlelist') }}" class="menu-link">
-                            <div data-i18n="Without navbar">Verified Articles</div>
+                            <div data-i18n="Without navbar">Verified Articles</div> -->
                           </a>
                         </li>
                       </ul>

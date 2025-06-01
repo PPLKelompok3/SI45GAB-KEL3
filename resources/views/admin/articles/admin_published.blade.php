@@ -29,6 +29,14 @@
             <a href="{{ route('articles.show', $article->id) }}" class="btn btn-sm btn-outline-info" target="_blank">
               View
             </a>
+            <a href="{{ route('articles.edit', $article->id) }}" class="btn btn-sm btn-outline-warning">
+    Edit
+  </a>
+            <form action="{{ route('admin.articles.destroy', $article->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Are you sure you want to delete this article?');">
+    @csrf
+    @method('DELETE')
+    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+  </form>
           </td>
         </tr>
         @empty

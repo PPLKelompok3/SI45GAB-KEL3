@@ -265,11 +265,11 @@
                     </a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="#">
-                      <i class="bx bx-cog me-2"></i>
-                      <span class="align-middle">Settings</span>
-                    </a>
-                  </li>
+                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                            <i class="bx bx-cog me-2"></i>
+                                            <span class="align-middle">Settings</span>
+                                        </a>
+                                    </li>
                   <li>
                     <a class="dropdown-item" href="#">
                       <span class="d-flex align-items-center align-middle">

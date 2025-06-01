@@ -18,7 +18,6 @@ return new class extends Migration
         $table->longText('content');
         $table->string('thumbnail')->nullable();
         $table->string('header_image')->nullable();
-        $table->string('status')->default('pending');
         $table->timestamps();
 });
 

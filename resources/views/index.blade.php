@@ -98,48 +98,48 @@
 
     </section>
     
-    <section class="py-5 bg-image overlay-primary fixed overlay" id="next" style="background-image: url('{{ asset('assets/images/hero_1.jpg') }}');" style="background-color: #ffc901;">
-      <div class="container">
-        <div class="row mb-5 justify-content-center">
-          <div class="col-md-7 text-center">
-            <h2 class="section-title mb-2 text-white">JobBoard Site Stats</h2>
-            <p class="lead text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita unde officiis recusandae sequi excepturi corrupti.</p>
-          </div>
-        </div>
-        <div class="row pb-0 block__19738 section-counter">
-
-          <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
-            <div class="d-flex align-items-center justify-content-center mb-2">
-              <strong class="number" data-number="1930">0</strong>
-            </div>
-            <span class="caption">Candidates</span>
-          </div>
-
-          <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
-            <div class="d-flex align-items-center justify-content-center mb-2">
-              <strong class="number" data-number="54">0</strong>
-            </div>
-            <span class="caption">Jobs Posted</span>
-          </div>
-
-          <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
-            <div class="d-flex align-items-center justify-content-center mb-2">
-              <strong class="number" data-number="120">0</strong>
-            </div>
-            <span class="caption">Jobs Filled</span>
-          </div>
-
-          <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
-            <div class="d-flex align-items-center justify-content-center mb-2">
-              <strong class="number" data-number="550">0</strong>
-            </div>
-            <span class="caption">Companies</span>
-          </div>
-
-            
-        </div>
+    <section class="py-5 bg-image overlay-primary fixed overlay" id="next" style="background-image: url('{{ asset('assets/images/hero_1.jpg') }}');">
+  <div class="container">
+    <div class="row mb-5 justify-content-center">
+      <div class="col-md-7 text-center">
+        <h2 class="section-title mb-2 text-white">JobBoard Site Stats</h2>
+        <p class="lead text-white">Here’s what’s happening on our platform!</p>
       </div>
-    </section>
+    </div>
+    <div class="row pb-0 block__19738 section-counter">
+
+      <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
+        <div class="d-flex align-items-center justify-content-center mb-2">
+          <strong class="number" data-number="{{ $totalApplicants }}">{{ $totalApplicants }}</strong>
+        </div>
+        <span class="caption">Candidates</span>
+      </div>
+
+      <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
+        <div class="d-flex align-items-center justify-content-center mb-2">
+          <strong class="number" data-number="{{ $totalJobsPosted }}">{{ $totalJobsPosted }}</strong>
+        </div>
+        <span class="caption">Jobs Posted</span>
+      </div>
+
+      <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
+        <div class="d-flex align-items-center justify-content-center mb-2">
+          <strong class="number" data-number="{{ $totalApplications }}">{{ $totalApplications }}</strong>
+        </div>
+        <span class="caption">Applications</span>
+      </div>
+
+      <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
+        <div class="d-flex align-items-center justify-content-center mb-2">
+          <strong class="number" data-number="{{ $totalCompanies }}">{{ $totalCompanies }}</strong>
+        </div>
+        <span class="caption">Companies</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 
     
 
@@ -162,7 +162,7 @@
 </section>
 
 
-    <section class="py-5 bg-image overlay-primary fixed overlay" style="background-image: url('{{ asset('assets/images/hero_1.jpg') }}');">
+    {{-- <section class="py-5 bg-image overlay-primary fixed overlay" style="background-image: url('{{ asset('assets/images/hero_1.jpg') }}');">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-md-8">
@@ -174,13 +174,13 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> --}}
 
     
    
 
 
-    <section class="bg-light pt-5 testimony-full">
+    {{-- <section class="bg-light pt-5 testimony-full">
         
         <div class="owl-carousel single-carousel">
 
@@ -215,8 +215,8 @@
 
       </div>
 
-    </section> 
-    <footer class="site-footer">
+    </section>  --}}
+    {{-- <footer class="site-footer">
 
       <a href="#top" class="smoothscroll scroll-top">
         <span class="icon-keyboard_arrow_up"></span>
@@ -272,7 +272,7 @@
           </div>
         </div>
       </div>
-    </footer>
+    </footer> --}}
   
   </div>
   @endsection

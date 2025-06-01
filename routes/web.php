@@ -11,6 +11,12 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RecruiterDashboardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\UserProfileEditController;
+use App\Http\Controllers\JobPostAssessmentController;
+use App\Http\Controllers\CompanyReviewController;
+use App\Http\Controllers\SavedFilterController;
+use App\Http\Controllers\ReferralController;
+use App\Http\Controllers\PublicProfileController;
 use App\Models\Notification;
 use App\Models\UserProfile;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +28,22 @@ Route::get('/breezedashboard', function () {
     return view('dashboard');
 })->name('breezedashboard');
 
+Route::middleware(['auth'])->group(function () {
+    Route::post('/articles/{id}/toggle-favorite', [ArticleController::class, 'toggleFavorite'])->name('articles.toggleFavorite');
+    Route::get('/articles/favorites', [ArticleController::class, 'favoriteList'])->name('articles.favorites');
+    Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
+});
+Route::middleware(['auth', 'recruiter'])->group(function () {
+    Route::patch('/recruiter/reviews/{id}/toggle-useful', [CompanyReviewController::class, 'toggleUseful'])->name('reviews.toggleUseful');
+    Route::delete('/recruiter/reviews/{id}', [CompanyReviewController::class, 'destroy'])->name('reviews.destroy');
+    Route::get('/recruiter/reviews', [CompanyReviewController::class, 'index'])->name('recruiter.review');
+
+});
+
+Route::middleware(['auth', 'recruiter'])->group(function () {
+Route::post('/recruiter/jobs/{job}/filters/save', [SavedFilterController::class, 'store'])->name('filters.save');
+Route::get('/filters/load/{id}', [SavedFilterController::class, 'load'])->name('filters.load');
+});
 
 Route::get('/', [LandingController::class, 'index'])->name('home');
 Route::get('/ajax/jobs', [LandingController::class, 'jobListPartial'])->name('ajax.jobs');
@@ -31,18 +53,32 @@ Route::post('/jobs/{id}/apply', [JobPostController::class, 'apply'])->middleware
 Route::get('/assessments/{job}/{application}', [JobPostAssessmentController::class, 'show'])->name('assessments.take');
 Route::post('/jobs/{job}/assessment/submit', [JobPostController::class, 'submitAssessment'])
         ->name('assessment.submit');
+Route::post('/assessments/{submission}/feedback', [JobPostController::class, 'storeFeedback'])
+    ->name('assessments.feedback.store');
 
+
+Route::middleware(['auth', 'applicant'])->group(function () {
+    Route::post('/companies/{company}/reviews', [CompanyReviewController::class, 'store'])
+         ->name('company.review.submit');
+         
+    
+});
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admindashboard', [AdminController::class, 'adminDashboard'])->name('admin.dashboard');
     Route::patch('/admin/verify-recruiter/{id}', [AdminController::class, 'verifyRecruiter'])->name('admin.verifyRecruiter');
 });
 
+Route::middleware(['auth', 'applicant'])->group(function () {
+    Route::get('/referral', [ReferralController::class, 'showForm'])->name('referral.form');
+    Route::post('/referral', [ReferralController::class, 'submitCode'])->name('referral.submit');
+});
 
 Route::resource('articles', ArticleController::class);
 Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
 Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
-Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
+
+
 
 Route::post('/articles/{id}/comment', [ArticleController::class, 'storeComment'])->name('article.comment');
 
@@ -71,10 +107,12 @@ Route::middleware(['auth'])->prefix('profile/edit')->group(function () {
 
 Route::view('/assessment-preview', 'assessment-static');
 Route::view('/assessment-file', 'assessment-file');
-
-
-
+Route::middleware('auth')->group(function () {
 Route::get('/profilepage', [App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
+});
+
+Route::get('/applicant/{id}/profile', [PublicProfileController::class, 'show'])->name('public.profile.show');
+
 
 
 
@@ -129,12 +167,6 @@ Route::middleware(['auth', 'verified.recruiter'])->group(function () {
     Route::get('/recruiter/jobs/{id}/applications', [RecruiterController::class, 'applicationsByJob'])->name('recruiter.applications.byJob');
     Route::get('/recruiter/applications/{application}', [JobApplicationController::class, 'show'])->name('applications.show');
     Route::patch('/recruiter/applications/{application}/update-status', [JobApplicationController::class, 'updateStatus'])->name('applications.updateStatus');
-
-});
-    
-
-Route::middleware(['auth', 'verified.recruiter'])->group(function () {
-    // Route::get('/', [JobPostController::class, 'index'])->name('jobs.index');
     Route::get('/create', [JobPostController::class, 'create'])->name('jobs.create');
     Route::post('/store', [JobPostController::class, 'store'])->name('jobs.store');
     Route::get('/jobs', [JobPostController::class, 'index'])->name('jobs.index');
@@ -146,6 +178,8 @@ Route::middleware(['auth', 'verified.recruiter'])->group(function () {
     Route::patch('/jobs/{job}/toggle-status', [JobPostController::class, 'toggleStatus'])->name('jobs.toggle-status');
     Route::patch('/applications/{id}/update-status', [JobApplicationController::class, 'updateStatus'])->name('applications.update-status');
     Route::get('/recruiter/notifications', [NotificationController::class, 'recruiterIndex'])->name('recruiter.notifications');
+    Route::post('/jobs/{job}/generate-referral', [JobPostController::class, 'generateReferralCode'])->name('referral.generate');
+
 
     
 
@@ -162,28 +196,11 @@ Route::get('/recruiter/unverified', function () {
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 Route::get('/jobs/{id}/{slug?}', [JobPostController::class, 'show'])->name('jobs.show');
-
-Route::middleware(['auth'])->group(function () {
-    Route::post('/articles/{id}/toggle-favorite', [ArticleController::class, 'toggleFavorite'])->name('articles.toggleFavorite');
-    Route::get('/articles/favorites', [ArticleController::class, 'favoriteList'])->name('articles.favorites');
-    Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
-});
-
-Route::resource('articles', ArticleController::class);
-Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
-Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
-
-Route::post('/articles/{id}/comment', [ArticleController::class, 'storeComment'])->name('article.comment');
-
-Route::get('/admin/articles/verification', [ArticleController::class, 'verifyArticles'])->name('admin.articles.verify');
-Route::get('/admin/articles/articlelist', [ArticleController::class, 'listArticles'])->name('admin.articles.articlelist');
-Route::patch('/admin/articles/{id}/approve', [ArticleController::class, 'approveArticle'])->name('admin.articles.approve');
-Route::get('/admin/articles/admin-published', [ArticleController::class, 'adminPublishedArticles'])->name('admin.articles.adminPublished');
 
 
 

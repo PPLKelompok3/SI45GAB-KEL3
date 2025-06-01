@@ -150,7 +150,7 @@ public function approveArticle($id)
     $article->status = 'published';
     $article->save();
 
-    return back()->with('success', 'Article approved and published');
+    return back()->with('success', 'Article approved and published.');
 }
 public function listArticles()
 {

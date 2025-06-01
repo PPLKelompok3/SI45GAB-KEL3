@@ -25,9 +25,13 @@ class Company extends Model
     {
         return $this->hasMany(JobPost::class);
     }
-    public function recruiter()
+        public function recruiter()
+    {
+        return $this->hasOne(User::class);
+    }
+    public function reviews()
 {
-    return $this->hasOne(User::class);
+    return $this->hasMany(CompanyReview::class);
 }
 
 

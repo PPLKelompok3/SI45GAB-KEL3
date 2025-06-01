@@ -18,90 +18,91 @@
     @stack('head')
     <style>
         body {
-          font-family: "Roboto", sans-serif;
-          background: #EFF1F3;
-          min-height: 100vh;
-          position: relative;
-      }
-      
-      .section-50 {
-          padding: 50px 0;
-      }
-      
-      .m-b-50 {
-          margin-bottom: 50px;
-      }
-      
-      .dark-link {
-          color: #333;
-      }
-      
-      .heading-line {
-          position: relative;
-          padding-bottom: 5px;
-      }
-      
-      .heading-line:after {
-          content: "";
-          height: 4px;
-          width: 75px;
-          background-color: #29B6F6;
-          position: absolute;
-          bottom: 0;
-          left: 0;
-      }
-      
-      .notification-ui_dd-content {
-          margin-bottom: 30px;
-      }
-      
-      .notification-list {
-          display: -webkit-box;
-          display: -ms-flexbox;
-          display: flex;
-          -webkit-box-pack: justify;
-          -ms-flex-pack: justify;
-          justify-content: space-between;
-          padding: 20px;
-          margin-bottom: 7px;
-          background: #fff;
-          -webkit-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
-          box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
-      }
-      
-      .notification-list--unread {
-          border-left: 2px solid #29B6F6;
-      }
-      
-      .notification-list .notification-list_content {
-          display: -webkit-box;
-          display: -ms-flexbox;
-          display: flex;
-      }
-      
-      .notification-list .notification-list_content .notification-list_img img {
-          height: 48px;
-          width: 48px;
-          border-radius: 50px;
-          margin-right: 20px;
-      }
-      
-      .notification-list .notification-list_content .notification-list_detail p {
-          margin-bottom: 5px;
-          line-height: 1.2;
-      }
-      
-      .notification-list .notification-list_feature-img img {
-          height: 48px;
-          width: 48px;
-          border-radius: 5px;
-          margin-left: 20px;
-      }
-      .notification-list--unread {
-          background-color: #eef3fd;
-          border-left: 4px solid #4361ee;
-      }
-      </style>
+            font-family: "Roboto", sans-serif;
+            background: #EFF1F3;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .section-50 {
+            padding: 50px 0;
+        }
+
+        .m-b-50 {
+            margin-bottom: 50px;
+        }
+
+        .dark-link {
+            color: #333;
+        }
+
+        .heading-line {
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .heading-line:after {
+            content: "";
+            height: 4px;
+            width: 75px;
+            background-color: #29B6F6;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        .notification-ui_dd-content {
+            margin-bottom: 30px;
+        }
+
+        .notification-list {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            padding: 20px;
+            margin-bottom: 7px;
+            background: #fff;
+            -webkit-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+        }
+
+        .notification-list--unread {
+            border-left: 2px solid #29B6F6;
+        }
+
+        .notification-list .notification-list_content {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+        }
+
+        .notification-list .notification-list_content .notification-list_img img {
+            height: 48px;
+            width: 48px;
+            border-radius: 50px;
+            margin-right: 20px;
+        }
+
+        .notification-list .notification-list_content .notification-list_detail p {
+            margin-bottom: 5px;
+            line-height: 1.2;
+        }
+
+        .notification-list .notification-list_feature-img img {
+            height: 48px;
+            width: 48px;
+            border-radius: 5px;
+            margin-left: 20px;
+        }
+
+        .notification-list--unread {
+            background-color: #eef3fd;
+            border-left: 4px solid #4361ee;
+        }
+    </style>
 </head>
 
 <body>
@@ -142,25 +143,26 @@
                             <div data-i18n="Analytics">Application</div>
                         </a>
                     </li> --}}
-                    <li class="menu-item {{ request()->routeIs('jobs.create') || request()->routeIs('jobs.index') ? 'active open' : '' }}">
-                      <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-layout"></i>
-                        <div data-i18n="Layouts">Jobs Posts</div>
-                      </a>
-                    
-                      <ul class="menu-sub">
-                        <li class="menu-item {{ request()->routeIs('jobs.create') ? 'active' : '' }}">
-                          <a href="{{ route('jobs.create') }}" class="menu-link">
-                            <div data-i18n="Create New Job Post">Create New Job Post</div>
-                          </a>
-                        </li>
-                    
-                        <li class="menu-item {{ request()->routeIs('jobs.index') ? 'active' : '' }}">
-                          <a href="{{ route('jobs.index') }}" class="menu-link">
-                            <div data-i18n="Without navbar">Job Posts List</div>
-                          </a>
-                        </li>
-                      </ul>
+                    <li
+                        class="menu-item {{ request()->routeIs('jobs.create') || request()->routeIs('jobs.index') ? 'active open' : '' }}">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-layout"></i>
+                            <div data-i18n="Layouts">Jobs Posts</div>
+                        </a>
+
+                        <ul class="menu-sub">
+                            <li class="menu-item {{ request()->routeIs('jobs.create') ? 'active' : '' }}">
+                                <a href="{{ route('jobs.create') }}" class="menu-link">
+                                    <div data-i18n="Create New Job Post">Create New Job Post</div>
+                                </a>
+                            </li>
+
+                            <li class="menu-item {{ request()->routeIs('jobs.index') ? 'active' : '' }}">
+                                <a href="{{ route('jobs.index') }}" class="menu-link">
+                                    <div data-i18n="Without navbar">Job Posts List</div>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="menu-item {{ request()->routeIs('recruiter.notifications') ? 'active' : '' }}">
                         <a href="{{ route('recruiter.notifications') }}" class="menu-link">
@@ -168,7 +170,13 @@
                             <div data-i18n="Analytics">Notifications</div>
                         </a>
                     </li>
-                    
+                    <li class="menu-item {{ request()->routeIs('recruiter.review') ? 'active' : '' }}">
+                        <a href="{{ route('recruiter.review') }}" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-star"></i>
+                            <div data-i18n="Company Reviews">Company Reviews</div>
+                        </a>
+                    </li>
+
                 </ul>
             </aside>
             <div class="layout-page">
@@ -224,9 +232,10 @@
                                         <hr class="dropdown-divider" />
                                     </li>
                                     <li>
-                                        <a class="dropdown-item text-center" href="{{ route('recruiter.notifications') }}">
+                                        <a class="dropdown-item text-center"
+                                            href="{{ route('recruiter.notifications') }}">
                                             View All Notifications
-                                          </a>
+                                        </a>
                                     </li>
 
                                 </ul>
@@ -268,11 +277,12 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">
+                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">
                                             <i class="bx bx-cog me-2"></i>
                                             <span class="align-middle">Settings</span>
                                         </a>
                                     </li>
+
                                     <li>
                                         <a class="dropdown-item" href="#">
                                             <span class="d-flex align-items-center align-middle">

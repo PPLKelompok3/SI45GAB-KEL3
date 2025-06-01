@@ -23,7 +23,16 @@
             </a>
           </td>
           <td>{{ $application->job->company->company_name ?? '-' }}</td>
-          <td><span class="badge bg-label-info">{{ $application->status }}</span></td>
+          <td>
+  @if ($application->status === 'Under_assessment')
+    <a href="{{ route('assessments.take', [$application->job->id, $application->id]) }}" class="btn btn-sm btn-outline-primary">
+      Continue Assessment
+    </a>
+  @else
+    <span class="badge bg-label-info">{{ $application->status }}</span>
+  @endif
+</td>
+
           <td>{{ $application->created_at->format('M d, Y') }}</td>
         </tr>
         @empty
